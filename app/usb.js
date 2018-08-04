@@ -33,7 +33,7 @@ const findDeviceByIds = ({ vendor, product }) => {
   const device = usb.findByIds(vendor, product);
 
   if (!device) {
-    throw new Error('No device found.');
+    throw new Error('No device match the ProductId.');
   }
 
   device.open();
@@ -42,7 +42,7 @@ const findDeviceByIds = ({ vendor, product }) => {
   const interface = findInterface(device);
 
   if (!interface) {
-    throw new Error('No valid interface found.');
+    throw new Error("Device haven't any valid interface.");
   }
 
   try {
@@ -56,7 +56,7 @@ const findDeviceByIds = ({ vendor, product }) => {
   connection.out = findEndpoint(interface, 'out');
 
   if (!connection.in || !connection.out) {
-    throw new Error('No valid endpoints found.');
+    throw new Error("Device haven't valid endpoints.");
   }
 };
 
@@ -77,8 +77,27 @@ const send = data => {
   });
 };
 
+const onDevicePlugged = handler => {
+  usb.on('attach', () => {
+    if (!connection.device) {
+      handler();
+    }
+  });
+};
+
+const onUnplugged = handler => {
+  usb.on('detach', device => {
+    if (device === connection.device) {
+      connection.device = null;
+      handler();
+    }
+  });
+};
+
 module.exports = {
   findDeviceByIds,
   listen,
   send,
+  onDevicePlugged,
+  onUnplugged,
 };

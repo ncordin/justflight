@@ -31,12 +31,27 @@ const buildCliMode = () => {
   return bufferOut;
 };
 
+const onConnect = handler => {
+  const tryToConnect = () => {
+    connect()
+      .then(() => handler())
+      .catch(error => {
+        console.log(error.message);
+      });
+  };
+
+  tryToConnect();
+  usb.onDevicePlugged(tryToConnect);
+};
+
 const connect = () => {
-  usb.findDeviceByIds(BETAFLIGHT_USB_IDS);
-  console.log('connected :)');
+  try {
+    usb.findDeviceByIds(BETAFLIGHT_USB_IDS);
+  } catch (error) {
+    return Promise.reject(error);
+  }
 
-  // sendToUsb(buildMessage(68));
-
+  // sendToUsb(buildMessage(68)); <-- Reboot
   return sendToUsb(buildCliMode());
 };
 
@@ -81,6 +96,8 @@ const sendToUsb = message => {
 };
 
 module.exports = {
+  onConnect,
   connect,
   sendCommand,
+  onUnplugged: usb.onUnplugged,
 };
