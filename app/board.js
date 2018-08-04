@@ -1,12 +1,6 @@
 const usb = require('./usb');
 const formatter = require('./formatter');
-
-// It looks like ALL Betaflight FC have the same ids.
-// So it's easy to to find them :)
-const BETAFLIGHT_USB_IDS = {
-  vendor: 1155,
-  product: 22336,
-};
+const constants = require('./board.constants');
 
 const buildMessage = code => {
   const buffer = new ArrayBuffer(6);
@@ -16,7 +10,7 @@ const buildMessage = code => {
   data[1] = 77; // header
   data[2] = 60; // header
   data[3] = 0; // data length
-  data[4] = code; // code (REBOOT = 68)
+  data[4] = code;
   data[5] = data[3] ^ data[4]; // checksum
 
   return data;
@@ -26,7 +20,7 @@ const buildCliMode = () => {
   var bufferOut = new ArrayBuffer(1);
   var bufView = new Uint8Array(bufferOut);
 
-  bufView[0] = 0x23;
+  bufView[0] = constants.MSP_CODES.CLI_MODE;
 
   return bufferOut;
 };
@@ -46,12 +40,12 @@ const onConnect = handler => {
 
 const connect = () => {
   try {
-    usb.findDeviceByIds(BETAFLIGHT_USB_IDS);
+    usb.connectToDeviceByIds(constants.BETAFLIGHT_USB_IDS);
   } catch (error) {
     return Promise.reject(error);
   }
 
-  // sendToUsb(buildMessage(68)); <-- Reboot
+  // sendToUsb(buildMessage(constants.MSP_CODES.REBOOT));
   return sendToUsb(buildCliMode());
 };
 
@@ -69,7 +63,7 @@ const receiveData = data => {
     const text = formatter.uInt8ArrayToString(message);
     state.response += text;
 
-    if (message.toString() === '13,10,35,32') {
+    if (message.toString() === constants.END_OF_MESSAGE) {
       state.sending = false;
       state.resolve(state.response);
     } else {

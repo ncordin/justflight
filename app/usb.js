@@ -29,7 +29,7 @@ const findEndpoint = (interface, direction) => {
   return endpoint;
 };
 
-const findDeviceByIds = ({ vendor, product }) => {
+const connectToDeviceByIds = ({ vendor, product }) => {
   const device = usb.findByIds(vendor, product);
 
   if (!device) {
@@ -95,7 +95,7 @@ const onUnplugged = handler => {
 };
 
 module.exports = {
-  findDeviceByIds,
+  connectToDeviceByIds,
   listen,
   send,
   onDevicePlugged,
