@@ -35,8 +35,6 @@ const connect = () => {
   usb.findDeviceByIds(BETAFLIGHT_USB_IDS);
   console.log('connected :)');
 
-  usb.listen(receiveData);
-
   // sendToUsb(buildMessage(68));
 
   return sendToUsb(buildCliMode());
@@ -53,11 +51,14 @@ const state = {
 const receiveData = data => {
   if (state.sending) {
     const message = new Uint8Array(data);
-    state.response += formatter.uInt8ArrayToString(message);
+    const text = formatter.uInt8ArrayToString(message);
+    state.response += text;
 
     if (message.toString() === '13,10,35,32') {
       state.sending = false;
       state.resolve(state.response);
+    } else {
+      usb.listen(receiveData);
     }
   }
 };
@@ -73,6 +74,7 @@ const sendToUsb = message => {
     state.reject = reject;
   });
 
+  usb.listen(receiveData);
   usb.send(message);
 
   return state.promise;

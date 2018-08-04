@@ -9,12 +9,12 @@ const connection = {
 
 const findInterface = device => {
   const [interface] = device.interfaces.filter(interface =>
-    isInterfaceValid(interface),
+    isInterfaceCoolEnougth(interface),
   );
   return interface;
 };
 
-const isInterfaceValid = interface => {
+const isInterfaceCoolEnougth = interface => {
   return (
     interface.endpoints.filter(
       endpoint => endpoint.transferType === usb.LIBUSB_TRANSFER_TYPE_BULK,
@@ -61,8 +61,13 @@ const findDeviceByIds = ({ vendor, product }) => {
 };
 
 const listen = handler => {
-  connection.in.on('data', handler);
-  connection.in.startPoll();
+  connection.in.transfer(64, (error, data) => {
+    if (error) {
+      throw new Error('Error during transfert with InEndpoint.');
+    }
+
+    handler(data);
+  });
 };
 
 const send = data => {
