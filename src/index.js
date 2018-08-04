@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
-import App from './components/App';
+import Index from './pages/Index';
 
 // HtmlWebpackPlugin WITHOUT template
 let root = document.createElement('div');
 root.id = 'root';
 document.body.appendChild(root);
 
-render(<App />, document.getElementById('root'));
+render(<Index />, document.getElementById('root'));

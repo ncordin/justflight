@@ -45,7 +45,6 @@ const connect = () => {
     return Promise.reject(error);
   }
 
-  // sendToUsb(buildMessage(constants.MSP_CODES.REBOOT));
   return sendToUsb(buildCliMode());
 };
 
@@ -55,6 +54,7 @@ const sendCommand = command => {
 
 const state = {
   sending: false,
+  controlTimeout: null,
 };
 
 const receiveData = data => {
@@ -65,9 +65,10 @@ const receiveData = data => {
 
     if (message.toString() === constants.END_OF_MESSAGE) {
       state.sending = false;
+      clearTimeout(state.controlTimeout);
       state.resolve(state.response);
     } else {
-      usb.listen(receiveData);
+      usb.listen(receiveData, onListenFailed);
     }
   }
 };
@@ -83,10 +84,28 @@ const sendToUsb = message => {
     state.reject = reject;
   });
 
-  usb.listen(receiveData);
+  usb.listen(receiveData, onListenFailed);
   usb.send(message);
 
+  state.controlTimeout = setTimeout(() => {
+    console.log('Control timeout in action !');
+    // reboot();
+  }, 1000);
+
   return state.promise;
+};
+
+const onListenFailed = () => {
+  state.sending = false;
+  state.response = '';
+  // state.reject();
+  console.log('onListenFailed...');
+};
+
+const reboot = () => {
+  usb.send(buildMessage(constants.MSP_CODES.REBOOT));
+  state.sending = false;
+  state.response = '';
 };
 
 export default {
@@ -94,4 +113,5 @@ export default {
   connect,
   sendCommand,
   onUnplugged: usb.onUnplugged,
+  reboot,
 };

@@ -17,7 +17,7 @@ if (
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: dev ? 1000 : 650,
+    width: dev ? 1200 : 650,
     height: 650,
     show: false,
   });

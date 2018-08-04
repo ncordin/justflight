@@ -60,13 +60,13 @@ const connectToDeviceByIds = ({ vendor, product }) => {
   }
 };
 
-const listen = handler => {
+const listen = (success, failure) => {
   connection.in.transfer(64, (error, data) => {
     if (error) {
-      throw new Error('Error during transfert with InEndpoint.');
+      failure();
+    } else {
+      success(data);
     }
-
-    handler(data);
   });
 };
 
