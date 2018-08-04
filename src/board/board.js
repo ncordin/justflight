@@ -1,6 +1,6 @@
-const usb = require('./usb');
-const formatter = require('./formatter');
-const constants = require('./board.constants');
+import usb from './usb';
+import formatter from './formatter';
+import constants from './board.constants';
 
 const buildMessage = code => {
   const buffer = new ArrayBuffer(6);
@@ -89,7 +89,7 @@ const sendToUsb = message => {
   return state.promise;
 };
 
-module.exports = {
+export default {
   onConnect,
   connect,
   sendCommand,

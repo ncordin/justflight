@@ -48,6 +48,9 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify('development'),
     }),
   ],
+  externals: {
+    usb: 'commonjs usb',
+  },
   devtool: 'cheap-source-map',
   devServer: {
     contentBase: OUTPUT_DIR,

@@ -1,4 +1,4 @@
-const stringToBuffer = string => {
+export const stringToBuffer = string => {
   const buffer = new ArrayBuffer(string.length);
   const array = new Uint8Array(buffer);
 
@@ -9,13 +9,13 @@ const stringToBuffer = string => {
   return buffer;
 };
 
-const uInt8ArrayToString = array => {
+export const uInt8ArrayToString = array => {
   return array.reduce((accumulator, current) => {
     return accumulator + String.fromCharCode(current);
   }, '');
 };
 
-module.exports = {
+export default {
   uInt8ArrayToString,
   stringToBuffer,
 };

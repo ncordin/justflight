@@ -1,3 +1,1 @@
-const board = require('./board');
-
-module.exports = board;
+export { default } from './board';

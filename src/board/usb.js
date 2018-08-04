@@ -1,29 +1,29 @@
-const usb = require('usb');
+import usb from 'usb';
 
 const connection = {
   device: null,
-  interface: null,
+  activeInterface: null,
   in: null,
   out: null,
 };
 
 const findInterface = device => {
-  const [interface] = device.interfaces.filter(interface =>
-    isInterfaceCoolEnougth(interface),
+  const [activeInterface] = device.interfaces.filter(activeInterface =>
+    isInterfaceCoolEnougth(activeInterface),
   );
-  return interface;
+  return activeInterface;
 };
 
-const isInterfaceCoolEnougth = interface => {
+const isInterfaceCoolEnougth = activeInterface => {
   return (
-    interface.endpoints.filter(
+    activeInterface.endpoints.filter(
       endpoint => endpoint.transferType === usb.LIBUSB_TRANSFER_TYPE_BULK,
     ).length === 2
   );
 };
 
-const findEndpoint = (interface, direction) => {
-  const [endpoint] = interface.endpoints.filter(
+const findEndpoint = (activeInterface, direction) => {
+  const [endpoint] = activeInterface.endpoints.filter(
     endpoint => endpoint.direction === direction,
   );
   return endpoint;
@@ -39,21 +39,21 @@ const connectToDeviceByIds = ({ vendor, product }) => {
   device.open();
   connection.device = device;
 
-  const interface = findInterface(device);
+  const activeInterface = findInterface(device);
 
-  if (!interface) {
+  if (!activeInterface) {
     throw new Error("Device haven't any valid interface.");
   }
 
   try {
-    interface.claim();
+    activeInterface.claim();
   } catch (error) {
     throw new Error('Devise busy, used by another sofware.');
   }
-  connection.interface = interface;
+  connection.activeInterface = activeInterface;
 
-  connection.in = findEndpoint(interface, 'in');
-  connection.out = findEndpoint(interface, 'out');
+  connection.in = findEndpoint(activeInterface, 'in');
+  connection.out = findEndpoint(activeInterface, 'out');
 
   if (!connection.in || !connection.out) {
     throw new Error("Device haven't valid endpoints.");
@@ -94,7 +94,7 @@ const onUnplugged = handler => {
   });
 };
 
-module.exports = {
+export default {
   connectToDeviceByIds,
   listen,
   send,

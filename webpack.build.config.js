@@ -54,6 +54,9 @@ module.exports = {
     }),
     new BabiliPlugin(),
   ],
+  externals: {
+    usb: 'commonjs usb',
+  },
   stats: {
     colors: true,
     children: false,

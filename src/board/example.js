@@ -1,4 +1,4 @@
-const board = require('./board');
+import board from './board';
 
 board.onConnect(() => {
   console.log('Board connected :)');
