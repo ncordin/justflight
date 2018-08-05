@@ -57,13 +57,21 @@ const state = {
   controlTimeout: null,
 };
 
+const isMessageComplete = message => {
+  const tailOfMessage = message
+    .toString()
+    .slice(-constants.END_OF_MESSAGE.length);
+
+  return tailOfMessage === constants.END_OF_MESSAGE;
+};
+
 const receiveData = data => {
   if (state.sending) {
     const message = new Uint8Array(data);
     const text = formatter.uInt8ArrayToString(message);
     state.response += text;
 
-    if (message.toString() === constants.END_OF_MESSAGE) {
+    if (isMessageComplete(message)) {
       state.sending = false;
       clearTimeout(state.controlTimeout);
       state.resolve(state.response);
