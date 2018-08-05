@@ -5,7 +5,7 @@ export const BETAFLIGHT_USB_IDS = {
 };
 
 export const MSP_CODES = {
-  CLI_MODE: 0x23,
+  CLI_MODE: 35,
   REBOOT: 68,
 };
 

@@ -37,8 +37,8 @@ const state = {
 const isMessageComplete = integers => {
   const tailOfMessage = integers.slice(-constants.END_OF_MESSAGE.length);
 
-  return constants.END_OF_MESSAGE.every((interger, index) => {
-    return tailOfMessage[index] === interger;
+  return constants.END_OF_MESSAGE.every((integer, index) => {
+    return tailOfMessage[index] === integer;
   });
 };
 
@@ -54,6 +54,8 @@ const receiveData = integers => {
     } else {
       usb.listen(receiveData, onListenFailed);
     }
+  } else {
+    console.log('Ignoring', integers);
   }
 };
 
@@ -87,19 +89,15 @@ const onListenFailed = () => {
 };
 
 const sendMSPCommand = code => {
-  const data = [];
-  data[0] = 36; // header
-  data[1] = 77; // header
-  data[2] = 60; // header
-  data[3] = 0; // data length
-  data[4] = code;
-  data[5] = data[3] ^ data[4]; // checksum
+  const mspMessage = [36, 77, 60, 0, code]; // headers & data length & code
+  mspMessage.push(mspMessage[3] ^ mspMessage[4]); // checksum
 
-  return buffer;
+  usb.send(mspMessage);
 };
 
 const reboot = () => {
-  usb.send(sendMSPCommand(constants.MSP_CODES.REBOOT));
+  // sendCommand('exit');
+  sendMSPCommand(constants.MSP_CODES.REBOOT);
   state.sending = false;
   state.response = '';
 };
