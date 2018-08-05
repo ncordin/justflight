@@ -1,4 +1,5 @@
 import usb from 'usb';
+import formatters from './formatters';
 
 const connection = {
   device: null,
@@ -61,17 +62,18 @@ const connectToDeviceByIds = ({ vendor, product }) => {
 };
 
 const listen = (success, failure) => {
-  connection.in.transfer(64, (error, data) => {
+  connection.in.transfer(64, (error, buffer) => {
     if (error) {
       failure();
     } else {
-      success(data);
+      success(new Uint8Array(buffer));
     }
   });
 };
 
-const send = data => {
-  connection.out.transfer(data, (error, data) => {
+const send = integers => {
+  const buffer = formatters.integersToBuffer(integers);
+  connection.out.transfer(buffer, (error, data) => {
     error && console.log('transfert error', error);
     data && console.log('transfert data', data);
   });

@@ -9,7 +9,7 @@ export const MSP_CODES = {
   REBOOT: 68,
 };
 
-export const END_OF_MESSAGE = '13,10,35,32';
+export const END_OF_MESSAGE = [13, 10, 35, 32];
 
 export default {
   BETAFLIGHT_USB_IDS,
