@@ -4,28 +4,36 @@ import board from '../board';
 class Board extends Component {
   constructor() {
     super();
-    this.state = { version: null, diff: null };
+    this.state = { version: null, response: null };
+    this.handleSendClick = this.handleSendClick.bind(this);
+    this.inputRef = React.createRef();
+  }
+
+  handleSendClick() {
+    const command = this.inputRef.current.value;
+
+    board.sendCommand(command).then(response => {
+      this.setState({ response });
+    });
   }
 
   componentDidMount() {
-    board.sendCommand('version').then(version => {
-      this.setState({ version });
-      board.sendCommand('diff').then(diff => {
-        this.setState({ diff });
-      });
+    board.sendCommand('version').then(response => {
+      this.setState({ response });
     });
-
-    // window.setTimeout(() => {
-    //   board.reboot();
-    // }, 2000);
   }
 
   render() {
     return (
       <div>
         <h1>Board is connected!</h1>
-        <pre>{this.state.version}</pre>
-        <pre>{this.state.diff}</pre>
+        <pre>{this.state.response}</pre>
+        <input
+          ref={this.inputRef}
+          type="text"
+          placeholder="Type command here"
+        />
+        <button onClick={this.handleSendClick}>Send</button>
       </div>
     );
   }

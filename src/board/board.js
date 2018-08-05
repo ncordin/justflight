@@ -113,5 +113,4 @@ export default {
   connect,
   sendCommand,
   onUnplugged: usb.onUnplugged,
-  reboot,
 };
