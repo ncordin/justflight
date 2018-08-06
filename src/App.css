@@ -1,0 +1,31 @@
+.App {
+  height: 100vh;
+  background-color: #f0f2f5;
+  display: flex;
+  flex-direction: column;
+}
+
+.App-content {
+  flex: 1;
+}
+
+.App-footer {
+  flex: 0;
+  flex-basis: 60px;
+}
+
+.Logo {
+  font-style: italic;
+  font-weight: bold;
+}
+
+.Logo > .active {
+  color: #fdb92c;
+}
+
+.ant-btn-primary,
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+  background-color: #fdb92c;
+  border-color: #fdb92c;
+}

@@ -5,7 +5,9 @@ const { spawn } = require('child_process');
 
 const SRC_DIR = path.resolve(__dirname, 'src');
 const OUTPUT_DIR = path.resolve(__dirname, 'dist');
+const ANTD_DIR = path.resolve(__dirname, 'node_modules/antd');
 const defaultInclude = [SRC_DIR];
+const styleInclude = [SRC_DIR, ANTD_DIR];
 
 module.exports = {
   entry: SRC_DIR + '/index.js',
@@ -20,7 +22,7 @@ module.exports = {
       {
         test: /\.css$/,
         use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
-        include: defaultInclude,
+        include: styleInclude,
       },
       {
         test: /\.js?$/,
