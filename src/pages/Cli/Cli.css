@@ -1,0 +1,19 @@
+.Cli-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.Cli-response {
+  flex: 1;
+  overflow: auto;
+  background-color: #2e2e2e;
+  color: #f0f2f5;
+  font-size: 12px;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.Cli-input {
+  flex: 0;
+  padding: 16px 0;
+}

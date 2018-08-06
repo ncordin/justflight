@@ -5,8 +5,21 @@
   flex-direction: column;
 }
 
+.App-header {
+  flex: 0;
+  padding: 16px;
+  padding-bottom: 0;
+  margin: 0;
+}
+
+.App-header > h1 {
+  margin: 0;
+}
+
 .App-content {
   flex: 1;
+  padding: 16px;
+  padding-bottom: 0;
 }
 
 .App-footer {
@@ -17,6 +30,7 @@
 .Logo {
   font-style: italic;
   font-weight: bold;
+  user-select: none;
 }
 
 .Logo > .active {

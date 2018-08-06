@@ -1,16 +1,27 @@
 import React from 'react';
-import {Button} from 'antd';
 import Centered from '../ui/Centered';
+import Logo from '../components/Logo';
+import Content from '../components/Content';
+
+import Mosquito from '../assets/mosquito.svg';
 
 const Welcome = () => {
   return (
-    <Centered>
-      <h1>Welcome!</h1>
-      <p>Please, connect your board to USB.</p>
-      <p>
-        <Button type="primary">Primary</Button>
-      </p>
-    </Centered>
+    <Content>
+      <Centered>
+        <h1>
+          <Logo />
+        </h1>
+        A very simple Betaflight configurator.
+        <div style={{ margin: 20 }}>
+          <Mosquito height={200} />
+        </div>
+        <h2>Welcome!</h2>
+        <p>
+          Please, connect your <strong>Betaflight</strong> board to USB.
+        </p>
+      </Centered>
+    </Content>
   );
 };
 

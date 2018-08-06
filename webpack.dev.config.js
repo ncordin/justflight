@@ -30,12 +30,20 @@ module.exports = {
         include: defaultInclude,
       },
       {
+        test: /\.svg$/,
+        use: [
+          { loader: 'babel-loader' },
+          { loader: 'react-svg-loader', options: { jsx: true } },
+        ],
+        include: defaultInclude,
+      },
+      {
         test: /\.(jpe?g|png|gif)$/,
         use: [{ loader: 'file-loader?name=img/[name]__[hash:base64:5].[ext]' }],
         include: defaultInclude,
       },
       {
-        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        test: /\.(eot|ttf|woff|woff2)$/,
         use: [
           { loader: 'file-loader?name=font/[name]__[hash:base64:5].[ext]' },
         ],

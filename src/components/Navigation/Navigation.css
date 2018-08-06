@@ -10,24 +10,26 @@
 
 .Navigation > li {
   flex: 1;
-  list-style-type: none;
   text-align: center;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.Navigation > li.tab {
+  flex: 0;
+  flex-basis: 60px;
+  list-style-type: none;
+  font-size: 18px;
   cursor: pointer;
 }
 
-.Navigation > li.large {
-  flex: 2;
+.Navigation > li.tab:hover {
+  background: #fdb92c;
 }
 
 .Navigation > li.active {
-  background-color: #f0f2f5;
+  background-color: #f0f2f5 !important;
   color: #2e2e2e;
-}
-
-.Navigation-selected {
-  background-color: #fdb92c;
 }

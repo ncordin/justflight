@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import board from '../board';
 import Welcome from './Welcome';
-import Board from './Board';
+import Cli from './Cli';
 
 class Index extends React.Component {
   constructor() {
@@ -20,7 +20,7 @@ class Index extends React.Component {
   }
 
   render() {
-    return this.state.connected ? <Board /> : <Welcome />;
+    return this.state.connected ? <Cli /> : <Welcome />;
   }
 }
 
