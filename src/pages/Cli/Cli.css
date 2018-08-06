@@ -10,6 +10,27 @@
   color: #f0f2f5;
   font-size: 12px;
   border-radius: 5px;
+  position: relative;
+}
+
+.Cli-response-picture {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: -20%;
+  top: -20%;
+  opacity: 0.06;
+}
+
+.Cli-response-picture > svg {
+  width: 140%;
+  height: 140%;
+}
+
+.Cli-response-text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   padding: 5px;
 }
 

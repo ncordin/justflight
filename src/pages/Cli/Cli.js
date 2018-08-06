@@ -3,6 +3,7 @@ import { Form, Input, Icon } from 'antd';
 import Header from '../../components/Header';
 import Content from '../../components/Content';
 
+import Mosquito from '../../assets/mosquito.svg';
 import './Cli.css';
 
 class Cli extends Component {
@@ -33,7 +34,12 @@ class Cli extends Component {
       <Fragment>
         <Header>Command Line Interpreter</Header>
         <Content className="Cli-container">
-          <div className="Cli-response">{response}</div>
+          <div className="Cli-response">
+            <div className="Cli-response-picture">
+              <Mosquito />
+            </div>
+            <div className="Cli-response-text">{response}</div>
+          </div>
           <div className="Cli-input">
             <Form onSubmit={this.handleSubmit}>
               <Input

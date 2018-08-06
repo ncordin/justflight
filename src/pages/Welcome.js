@@ -14,7 +14,7 @@ const Welcome = () => {
         </h1>
         A very simple Betaflight configurator.
         <div style={{ margin: 20 }}>
-          <Mosquito height={200} />
+          <Mosquito height={250} />
         </div>
         <h2>Welcome!</h2>
         <p>
