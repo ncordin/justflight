@@ -3,8 +3,13 @@ import IndexPage, { PAGE_TYPES } from './pages/Index';
 import Navigation from './components/Navigation';
 import board from './board';
 
+import { Provider } from 'react-redux';
+import { configureStore } from './store';
+
 import 'antd/dist/antd.css';
 import './App.css';
+
+const store = configureStore();
 
 class App extends Component {
   constructor() {
@@ -33,12 +38,14 @@ class App extends Component {
     const { page } = this.state;
 
     return (
-      <div className="App">
-        <IndexPage page={page} />
-        <div className="App-footer">
-          <Navigation page={page} setPage={this.setPage} />
+      <Provider store={store}>
+        <div className="App">
+          <IndexPage page={page} />
+          <div className="App-footer">
+            <Navigation page={page} setPage={this.setPage} />
+          </div>
         </div>
-      </div>
+      </Provider>
     );
   }
 }

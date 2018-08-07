@@ -6,7 +6,7 @@ import Content from '../components/Content';
 const Board = () => {
   return (
     <Fragment>
-      <Header>Board informations</Header>
+      <Header>Board</Header>
       <Content>
         <Centered>In progress...</Centered>
       </Content>
