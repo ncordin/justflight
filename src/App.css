@@ -37,6 +37,14 @@
   color: #fdb92c;
 }
 
+.no-margin {
+  margin: 0;
+}
+
+.details {
+  opacity: 0.4;
+}
+
 .ant-btn-primary,
 .ant-btn-primary:hover,
 .ant-btn-primary:focus {

@@ -9,10 +9,10 @@ const Welcome = () => {
   return (
     <Content>
       <Centered>
-        <h1>
+        <h1 className="no-margin">
           <Logo />
         </h1>
-        A very simple Betaflight configurator.
+        <div className="details">A very simple Betaflight configurator.</div>
         <div style={{ margin: 20 }}>
           <Mosquito height={250} />
         </div>

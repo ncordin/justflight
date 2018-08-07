@@ -1,13 +1,16 @@
 import usb from './usb';
 import formatters from './formatters';
+import { createLogger } from './logger';
 import constants from './board.constants';
+
+const logger = createLogger('board');
 
 const onConnect = handler => {
   const tryToConnect = () => {
     connect()
       .then(() => handler())
-      .catch(error => {
-        console.log(error.message);
+      .catch(() => {
+        logger('error', 'connection failed!');
       });
   };
 
@@ -22,10 +25,17 @@ const connect = () => {
     return Promise.reject(error);
   }
 
-  return sendToUsb([constants.MSP_CODES.CLI_MODE]);
+  return sendToUsb([constants.MSP_CODES.CLI_MODE]).then(response => {
+    logger('success', 'board connected!');
+    if (response === '#') {
+      logger('warning', 'the board was already is cli mode, reactivating...');
+      return sendCommand('version');
+    }
+  });
 };
 
 const sendCommand = command => {
+  logger('info', `sending command "${command}"`);
   return sendToUsb(formatters.stringToIntegers(`${command}\n`));
 };
 
@@ -34,12 +44,19 @@ const state = {
   controlTimeout: null,
 };
 
+const areMessagesEqual = (messageA, messageB) => {
+  return messageA.every((integer, index) => {
+    return messageB[index] === integer;
+  });
+};
+
 const isMessageComplete = integers => {
   const tailOfMessage = integers.slice(-constants.END_OF_MESSAGE.length);
 
-  return constants.END_OF_MESSAGE.every((integer, index) => {
-    return tailOfMessage[index] === integer;
-  });
+  return (
+    areMessagesEqual(constants.END_OF_MESSAGE, tailOfMessage) ||
+    areMessagesEqual(integers, constants.ALREADY_IN_CLI_MODE)
+  );
 };
 
 const receiveData = integers => {
@@ -48,6 +65,7 @@ const receiveData = integers => {
     state.response += text;
 
     if (isMessageComplete(integers)) {
+      logger('success', `message received ${state.response}`);
       state.sending = false;
       clearTimeout(state.controlTimeout);
       state.resolve(state.response);
@@ -55,12 +73,13 @@ const receiveData = integers => {
       usb.listen(receiveData, onListenFailed);
     }
   } else {
-    console.log('Ignoring', integers);
+    logger('warning', `ignoring data ${integers}`);
   }
 };
 
 const sendToUsb = message => {
   if (state.sending) {
+    logger('error', 'send message failed! Board is already sending...');
     throw new Error('Send message failed! Board is already sending...');
   }
   state.sending = true;
@@ -74,7 +93,7 @@ const sendToUsb = message => {
   usb.send(message);
 
   state.controlTimeout = setTimeout(() => {
-    console.log('Control timeout in action !');
+    logger('error', 'did not get a valid response in time!');
     // reboot();
   }, 1000);
 
@@ -85,7 +104,7 @@ const onListenFailed = () => {
   state.sending = false;
   state.response = '';
   // state.reject();
-  console.log('onListenFailed...');
+  logger('error', 'messsage receiption failed...');
 };
 
 const sendMSPCommand = code => {

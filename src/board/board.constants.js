@@ -11,8 +11,11 @@ export const MSP_CODES = {
 
 export const END_OF_MESSAGE = [13, 10, 35, 32];
 
+export const ALREADY_IN_CLI_MODE = [35];
+
 export default {
   BETAFLIGHT_USB_IDS,
   MSP_CODES,
   END_OF_MESSAGE,
+  ALREADY_IN_CLI_MODE,
 };
