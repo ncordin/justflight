@@ -19,7 +19,7 @@
 
 .Navigation > li.tab {
   flex: 0;
-  flex-basis: 60px;
+  flex-basis: 50px;
   list-style-type: none;
   font-size: 18px;
   cursor: pointer;

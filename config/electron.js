@@ -16,9 +16,12 @@ if (
 }
 
 function createWindow() {
+  const appWidth = 450;
+  const appHeight = 600;
+
   mainWindow = new BrowserWindow({
-    width: dev ? 1200 : 650,
-    height: 650,
+    width: dev ? appWidth + 500 : appWidth,
+    height: appHeight,
     show: false,
   });
 

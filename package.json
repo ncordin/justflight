@@ -13,12 +13,12 @@
     "justflight",
     "betaflight"
   ],
-  "main": "main.js",
+  "main": "config/electron.js",
   "scripts": {
-    "prod": "webpack --config webpack.build.config.js && electron --noDevServer .",
-    "dev": "webpack-dev-server --hot --host 0.0.0.0 --config=./webpack.dev.config.js",
-    "build": "webpack --config webpack.build.config.js",
-    "package": "webpack --config webpack.build.config.js",
+    "prod": "webpack --config ./config/webpack.build.js && electron --noDevServer .",
+    "dev": "webpack-dev-server --hot --host 0.0.0.0 --config=./config/webpack.dev.js",
+    "build": "webpack --config ./config/webpack.build.js",
+    "package": "webpack --config ./config/webpack.build.js",
     "postpackage": "electron-packager ./ --out=./builds",
     "postinstall": "electron-rebuild --force"
   },
