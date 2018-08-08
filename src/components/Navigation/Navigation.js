@@ -2,38 +2,41 @@ import React, { Component } from 'react';
 
 import { Button, Icon } from 'antd';
 import Logo from '../../components/Logo';
-import { PAGE_TYPES } from '../../pages/Index';
+import { PAGE_DETAILS } from '../../constants/navigation.constants';
 
 import './Navigation.css';
 
-const icons = {
-  [PAGE_TYPES.BOARD]: 'qrcode',
-  [PAGE_TYPES.TUNNING]: 'rocket',
-  [PAGE_TYPES.CONFIG]: 'setting',
-  [PAGE_TYPES.CLI]: 'code'
+const findIn = (object, test) => {
+  const keys = Object.keys(object);
+  const values = keys.map(key => object[key]);
+
+  return values.filter(test);
 };
 
 class Navigation extends Component {
-  renderTab(tab) {
+  renderTab(page) {
     const { currentPage, setPage } = this.props;
 
     return (
       <li
-        key={tab}
-        onClick={() => setPage(tab)}
-        className={tab === currentPage ? 'tab active' : 'tab'}
+        key={page.name}
+        onClick={() => setPage(page.name)}
+        className={page.name === currentPage ? 'tab active' : 'tab'}
       >
-        <Icon type={icons[tab]} />
+        <Icon type={page.icon} />
       </li>
     );
   }
+
   render() {
+    const pages = findIn(PAGE_DETAILS, details => details.navigation);
+
     return (
       <ul className="Navigation">
         <li>
           <Logo />
         </li>
-        {Object.keys(icons).map(tab => this.renderTab(tab))}
+        {pages.map(page => this.renderTab(page))}
         <li>
           <Button type="primary">Save</Button>
         </li>

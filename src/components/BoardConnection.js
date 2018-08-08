@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import board from '../board';
 import { connected, disconnected } from '../store/board/board.actions';
 import { setCurrentPage } from '../store/navigation/navigation.actions';
-import {PAGE_TYPES} from '../pages/Index';
+import { PAGE_TYPES } from '../constants/navigation.constants';
 
 class BoardConnection extends Component {
   componentDidMount() {

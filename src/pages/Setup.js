@@ -3,10 +3,10 @@ import Centered from '../ui/Centered';
 import Header from '../components/Header';
 import Content from '../components/Content';
 
-const Config = () => {
+const Setup = () => {
   return (
     <Fragment>
-      <Header>Board configuration</Header>
+      <Header>Setup</Header>
       <Content>
         <Centered>In progress...</Centered>
       </Content>
@@ -14,4 +14,4 @@ const Config = () => {
   );
 };
 
-export default Config;
+export default Setup;

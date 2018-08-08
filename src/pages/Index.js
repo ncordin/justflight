@@ -4,19 +4,12 @@ import { connect } from 'react-redux';
 import { selectIsBoardConnected } from '../store/board/board.selectors';
 import { selectCurrentPage } from '../store/navigation/navigation.selectors';
 
+import { PAGE_TYPES } from '../constants/navigation.constants';
 import Welcome from './Welcome';
 import Board from './Board';
 import Tunning from './Tunning';
-import Config from './Config';
+import Setup from './Setup';
 import Cli from './Cli';
-
-export const PAGE_TYPES = {
-  WELCOME: 'welcome',
-  BOARD: 'board',
-  TUNNING: 'tunning',
-  CONFIG: 'config',
-  CLI: 'cli'
-};
 
 class Index extends Component {
   render() {
@@ -32,8 +25,8 @@ class Index extends Component {
       case PAGE_TYPES.TUNNING:
         return <Tunning />;
 
-      case PAGE_TYPES.CONFIG:
-        return <Config />;
+      case PAGE_TYPES.SETUP:
+        return <Setup />;
 
       case PAGE_TYPES.CLI:
         return <Cli />;

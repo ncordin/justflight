@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 
 import { configureStore } from './store';
 import BoardConnection from './components/BoardConnection';
-import IndexPage, { PAGE_TYPES } from './pages/Index';
+import IndexPage from './pages/Index';
 import Navigation from './components/Navigation';
 
 import 'antd/dist/antd.css';
