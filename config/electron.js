@@ -27,6 +27,8 @@ function createWindow() {
 
   let indexPath;
   if (dev && process.argv.indexOf('--noDevServer') === -1) {
+    process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true;
+
     indexPath = url.format({
       protocol: 'http:',
       host: 'localhost:8080',

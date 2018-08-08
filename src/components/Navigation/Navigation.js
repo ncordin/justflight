@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import { Button, Icon } from 'antd';
 import Logo from '../../components/Logo';
 import { PAGE_TYPES } from '../../pages/Index';
@@ -9,34 +10,30 @@ const icons = {
   [PAGE_TYPES.BOARD]: 'qrcode',
   [PAGE_TYPES.TUNNING]: 'rocket',
   [PAGE_TYPES.CONFIG]: 'setting',
-  [PAGE_TYPES.CLI]: 'code',
+  [PAGE_TYPES.CLI]: 'code'
 };
 
 class Navigation extends Component {
-  renderTab(page, active) {
-    const { setPage } = this.props;
+  renderTab(tab) {
+    const { currentPage, setPage } = this.props;
 
     return (
       <li
-        key={page}
-        onClick={() => setPage(page)}
-        className={page === active ? 'tab active' : 'tab'}
+        key={tab}
+        onClick={() => setPage(tab)}
+        className={tab === currentPage ? 'tab active' : 'tab'}
       >
-        <Icon type={icons[page]} />
+        <Icon type={icons[tab]} />
       </li>
     );
   }
   render() {
-    const activePage = this.props.page;
-
     return (
       <ul className="Navigation">
         <li>
           <Logo />
         </li>
-        {Object.keys(icons).map(pageType =>
-          this.renderTab(pageType, activePage),
-        )}
+        {Object.keys(icons).map(tab => this.renderTab(tab))}
         <li>
           <Button type="primary">Save</Button>
         </li>

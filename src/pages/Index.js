@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { selectIsBoardConnected } from '../store/board/board.selectors';
+import { selectCurrentPage } from '../store/navigation/navigation.selectors';
+
 import Welcome from './Welcome';
 import Board from './Board';
 import Tunning from './Tunning';
@@ -10,12 +15,14 @@ export const PAGE_TYPES = {
   BOARD: 'board',
   TUNNING: 'tunning',
   CONFIG: 'config',
-  CLI: 'cli',
+  CLI: 'cli'
 };
 
-class Index extends React.Component {
+class Index extends Component {
   render() {
-    switch (this.props.page) {
+    const { currentPage } = this.props;
+
+    switch (currentPage) {
       case PAGE_TYPES.WELCOME:
         return <Welcome />;
 
@@ -37,4 +44,9 @@ class Index extends React.Component {
   }
 }
 
-export default Index;
+const mapStateToProps = state => ({
+  isConnected: selectIsBoardConnected(state),
+  currentPage: selectCurrentPage(state)
+});
+
+export default connect(mapStateToProps)(Index);

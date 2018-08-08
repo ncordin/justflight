@@ -1,7 +1,10 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
+
 import board from '../board';
 import { connected, disconnected } from '../store/board/board.actions';
+import { setCurrentPage } from '../store/navigation/navigation.actions';
+import {PAGE_TYPES} from '../pages/Index';
 
 class BoardConnection extends Component {
   componentDidMount() {
@@ -26,8 +29,14 @@ class BoardConnection extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onBoardConnect: () => dispatch(connect()),
-  onBoardDisconnect: () => dispatch(disconnected())
+  onBoardConnect: () => {
+    dispatch(connected());
+    dispatch(setCurrentPage(PAGE_TYPES.BOARD));
+  },
+  onBoardDisconnect: () => {
+    dispatch(disconnected());
+    dispatch(setCurrentPage(PAGE_TYPES.WELCOME));
+  }
 });
 
 export default connect(
