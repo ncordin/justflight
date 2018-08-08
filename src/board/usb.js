@@ -18,8 +18,13 @@ const connectToDeviceByIds = ({ vendor, product }) => {
 
   if (!device) {
     logger('error', `no device found.`);
-    throw new Error('No device match the ProductId.');
+    throw new Error();
   }
+
+  // Not sure about that...
+  usb.on('error', error => {
+    logger('error', `catched on device: ${error}`);
+  });
 
   logger('success', 'device found! trying to open device...');
   device.open();
@@ -30,25 +35,24 @@ const connectToDeviceByIds = ({ vendor, product }) => {
 
   if (!activeInterface) {
     logger('error', 'no compatible interface found.');
-    throw new Error("Device haven't any valid interface.");
+    throw new Error();
   }
 
   try {
     activeInterface.claim();
   } catch (error) {
     logger('error', 'interface found but not available.');
-    throw new Error('Devise busy, used by another sofware.');
+    throw new Error(error);
   }
 
   logger('info', 'connected to interface! searching endpoints...');
   connection.activeInterface = activeInterface;
-
   connection.in = findEndpoint(activeInterface, 'in');
   connection.out = findEndpoint(activeInterface, 'out');
 
   if (!connection.in || !connection.out) {
     logger('error', 'no valid endpoints found.');
-    throw new Error("Device haven't valid endpoints.");
+    throw new Error();
   }
 
   logger('info', 'endpoints found.');
@@ -97,6 +101,11 @@ const onUnplugged = handler => {
     }
   });
 };
+
+// Not sure about that...
+usb.on('error', error => {
+  logger('error', `catched on usb: ${error}`);
+});
 
 export default {
   connectToDeviceByIds,

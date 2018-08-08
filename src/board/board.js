@@ -9,8 +9,8 @@ const onConnect = handler => {
   const tryToConnect = () => {
     connect()
       .then(() => handler())
-      .catch(() => {
-        logger('error', 'connection failed!');
+      .catch(error => {
+        logger('error', `connection failed! ${error.message}`);
       });
   };
 
