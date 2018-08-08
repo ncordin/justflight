@@ -1,15 +1,30 @@
-export const ACTION_TYPES = {
-  SET_BOARD_VERSION: 'SET_BOARD_VERSION',
-};
+import { ACTION_TYPES } from './board.actions';
 
-const initialState = {};
+const initialState = {
+  connected: false,
+  details: {}
+};
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case ACTION_TYPES.SET_BOARD_VERSION:
+    case ACTION_TYPES.BOARD_CONNECTED:
       return {
-        version: payload,
+        ...state,
+        connected: true
       };
+
+    case ACTION_TYPES.BOARD_DISCONNECTED:
+      return {
+        ...state,
+        connected: false
+      };
+
+    case ACTION_TYPES.SET_BOARD_DETAILS:
+      return {
+        ...state,
+        details: payload
+      };
+
     default:
       return state;
   }

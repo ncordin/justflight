@@ -1,7 +1,7 @@
 {
-  "name": "just-flight",
-  "version": "0.1.0",
-  "description": "Minimal and modern Betaflight configurator.",
+  "name": "justflight",
+  "version": "0.2.0",
+  "description": "A very simple Betaflight configurator.",
   "author": "Nicolas Cordin",
   "license": "GPL-3.0",
   "homepage": "https://github.com/dindonus/justflight",
@@ -10,6 +10,7 @@
     "url": "https://github.com/dindonus/justflight.git"
   },
   "keywords": [
+    "justflight",
     "betaflight"
   ],
   "main": "main.js",
@@ -25,7 +26,9 @@
     "antd": "^3.8.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "babili-webpack-plugin": "^0.1.2",
     "css-loader": "^1.0.0",
     "electron": "^2.0.6",
