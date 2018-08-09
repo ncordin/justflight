@@ -1,0 +1,18 @@
+.Board-picture {
+  width: 150px;
+  height: 150px;
+  margin: 32px auto;
+  border-radius: 16px;
+  border: 5px solid #444;
+  background-color: #5a5a5a;
+  color: #999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 60px;
+  font-weight: bold;
+}
+
+.Board-details {
+  line-height: 28px;
+}
