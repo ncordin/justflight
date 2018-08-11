@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-
 import { Button, Icon } from 'antd';
+
 import Logo from '../../components/Logo';
 import { PAGE_DETAILS } from '../../constants/navigation.constants';
 
@@ -29,6 +29,7 @@ class Navigation extends Component {
   }
 
   render() {
+    const { onSave } = this.props;
     const pages = findIn(PAGE_DETAILS, details => details.navigation);
 
     return (
@@ -38,7 +39,9 @@ class Navigation extends Component {
         </li>
         {pages.map(page => this.renderTab(page))}
         <li>
-          <Button type="primary">Save</Button>
+          <Button type="primary" onClick={() => onSave()}>
+            Save
+          </Button>
         </li>
       </ul>
     );

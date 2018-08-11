@@ -5,7 +5,7 @@ export const ACTION_TYPES = {
 };
 
 export const fetchSettings = () => dispatch => {
-  readSettings().then(settings => {
+  return readSettings().then(settings => {
     dispatch(setSettings(settings));
   });
 };

@@ -7,11 +7,12 @@ settingHandlers.push({
   read: () => {
     return board
       .get('vbat_warning_cell_voltage')
-      .then(response => parseInt(response));
+      .then(response => (response / 10).toFixed(1));
   },
   save: value => {
-    board.set('vbat_warning_cell_voltage', value).then(() => {
-      board.set('vbat_min_cell_voltage', value - 0.2);
+    const voltage = value * 10;
+    board.set('vbat_warning_cell_voltage', voltage).then(() => {
+      board.set('vbat_min_cell_voltage', voltage - 2);
     });
   },
 });
