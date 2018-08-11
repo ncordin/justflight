@@ -13,6 +13,10 @@ class Cli extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    this.inputRef.current.input.focus();
+  }
+
   handleSubmit(event) {
     const { onSubmit } = this.props;
     const command = this.inputRef.current.input.value;

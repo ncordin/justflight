@@ -39,6 +39,19 @@ const sendCommand = command => {
   return sendToUsb(formatters.stringToIntegers(`${command}\n`));
 };
 
+const get = property => {
+  return sendToUsb(formatters.stringToIntegers(`get ${property}\n`)).then(
+    response => {
+      const [, value] = response.match(/\w = (\S+)/);
+      return value;
+    }
+  );
+};
+
+const set = (property, value) => {
+  return sendToUsb(formatters.stringToIntegers(`set ${property} = ${value}\n`));
+};
+
 const state = {
   sending: false,
   controlTimeout: null,
@@ -125,5 +138,7 @@ export default {
   onConnect,
   connect,
   sendCommand,
+  get,
+  set,
   onUnplugged: usb.onUnplugged,
 };
