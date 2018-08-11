@@ -1,4 +1,4 @@
-export const readSettings = adapter => {
+export const readWithAdapter = adapter => {
   const { settingHandlers } = adapter;
 
   return settingHandlers.reduce((accumulator, { name, read }) => {
@@ -13,14 +13,12 @@ export const readSettings = adapter => {
   }, Promise.resolve({}));
 };
 
-export const saveSettings = (adapter, settings) => {
+export const saveWithAdapter = (adapter, settings) => {
   const { settingHandlers } = adapter;
 
-  return Object.entries(settings).reduce((accumulator, [name, value]) => {
+  return Object.entries(settings).forEach(([name, value]) => {
     const handler = settingHandlers.find(handler => handler.name === name);
 
-    return accumulator.then(() => {
-      return handler.save(value);
-    });
-  }, Promise.resolve());
+    handler.save(value);
+  });
 };

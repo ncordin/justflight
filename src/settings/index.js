@@ -1,8 +1,5 @@
 import adaptersByVersion from './adapters';
-import {
-  readSettings as readWithAdapter,
-  saveSettings as saveWithAdapter,
-} from './helpers';
+import { readWithAdapter, saveWithAdapter } from './helpers';
 
 const VERSION = '3.4.0';
 const adapter = adaptersByVersion[VERSION];

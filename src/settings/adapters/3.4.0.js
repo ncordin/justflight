@@ -11,9 +11,9 @@ settingHandlers.push({
   },
   save: value => {
     const voltage = value * 10;
-    board.set('vbat_warning_cell_voltage', voltage).then(() => {
-      board.set('vbat_min_cell_voltage', voltage - 2);
-    });
+
+    board.set('vbat_warning_cell_voltage', voltage);
+    board.set('vbat_min_cell_voltage', voltage - 2);
   },
 });
 
@@ -36,7 +36,7 @@ settingHandlers.push({
 });
 
 const onSave = (settings, boardDetails) => {
-  board.sendCommands(['set iterm_relax = 3']);
+  board.set('iterm_relax', 3);
 };
 
 const handledParams = ['iterm_relax'];

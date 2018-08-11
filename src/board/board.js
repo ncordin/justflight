@@ -34,24 +34,6 @@ const connect = () => {
   });
 };
 
-const sendCommand = command => {
-  logger('info', `sending command "${command}"`);
-  return sendToUsb(formatters.stringToIntegers(`${command}\n`));
-};
-
-const get = property => {
-  return sendToUsb(formatters.stringToIntegers(`get ${property}\n`)).then(
-    response => {
-      const [, value] = response.match(/\w = (\S+)/);
-      return value;
-    }
-  );
-};
-
-const set = (property, value) => {
-  return sendToUsb(formatters.stringToIntegers(`set ${property} = ${value}\n`));
-};
-
 const state = {
   sending: false,
   controlTimeout: null,
@@ -120,6 +102,11 @@ const onListenFailed = () => {
   logger('error', 'messsage receiption failed...');
 };
 
+const sendCommand = command => {
+  logger('info', `sending command "${command}"`);
+  return sendToUsb(formatters.stringToIntegers(`${command}\n`));
+};
+
 const sendMSPCommand = code => {
   const mspMessage = [36, 77, 60, 0, code]; // headers & data length & code
   mspMessage.push(mspMessage[3] ^ mspMessage[4]); // checksum
@@ -138,7 +125,5 @@ export default {
   onConnect,
   connect,
   sendCommand,
-  get,
-  set,
   onUnplugged: usb.onUnplugged,
 };

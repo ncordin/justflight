@@ -1,10 +1,10 @@
 import board from '../board';
 
-export const boardDetailsParser = rawDetails => {
+const boardDetailsParser = rawDetails => {
   const {
     version: versionRaw,
     status,
-    protocol: protocolRaw,
+    protocol,
     gyroDenom,
     pidDenom,
   } = rawDetails;
@@ -16,11 +16,7 @@ export const boardDetailsParser = rawDetails => {
   const [, load] = status.match(/CPU:(\w+)/) || [];
   const [, gyro] = status.match(/GYRO=(\w+)/) || [];
 
-  const [, protocol] = protocolRaw.match(/motor_pwm_protocol = (\S+)/) || [];
-  const [, gyroLoop] = gyroDenom.match(/gyro_sync_denom = (\S+)/) || [];
-  const [, pidLoop] = pidDenom.match(/pid_process_denom = (\S+)/) || [];
-
-  const loops = `${8 / gyroLoop}K / ${8 / gyroLoop / pidLoop}K`;
+  const loops = `${8 / gyroDenom}K / ${8 / gyroDenom / pidDenom}K`;
 
   const family =
     {
@@ -41,20 +37,25 @@ export const boardDetailsParser = rawDetails => {
     family,
   };
 
-  // Potentials additional data: temperature / gyro chip...
-
   return details;
 };
 
-export const sendCommands = commands => {
-  return Object.entries(commands).reduce((accumulator, [name, command]) => {
-    return accumulator.then(chainResults =>
-      board.sendCommand(command).then(currentResult => {
-        return {
-          ...chainResults,
-          [name]: currentResult,
-        };
-      })
-    );
-  }, Promise.resolve({}));
+export const boardDetailsFetcher = () => {
+  return Promise.all([
+    board.sendCommand('version'),
+    board.sendCommand('status'),
+    board.get('motor_pwm_protocol'),
+    board.get('gyro_sync_denom'),
+    board.get('pid_process_denom'),
+  ]).then(([version, status, protocol, gyroDenom, pidDenom]) => {
+    const rawDetails = {
+      version,
+      status,
+      protocol,
+      gyroDenom,
+      pidDenom,
+    };
+
+    return boardDetailsParser(rawDetails);
+  });
 };

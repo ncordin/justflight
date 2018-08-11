@@ -32,9 +32,8 @@ class BoardConnection extends Component {
 const mapDispatchToProps = dispatch => ({
   onBoardConnect: () => {
     dispatch(connected());
-    dispatch(fetchSettings()).then(() => {
-      dispatch(setCurrentPage(PAGE_TYPES.BOARD));
-    });
+    dispatch(fetchSettings());
+    dispatch(setCurrentPage(PAGE_TYPES.BOARD));
   },
   onBoardDisconnect: () => {
     dispatch(disconnected());

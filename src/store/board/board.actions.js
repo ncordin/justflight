@@ -1,5 +1,4 @@
-import board from '../../board';
-import { boardDetailsParser, sendCommands } from '../../helpers';
+import { boardDetailsFetcher } from '../../helpers';
 
 export const ACTION_TYPES = {
   BOARD_CONNECTED: 'BOARD_CONNECTED',
@@ -16,18 +15,8 @@ export const disconnected = () => ({
 });
 
 export const fetchBoardDetails = () => dispatch => {
-  const commands = {
-    status: 'status',
-    version: 'version',
-    protocol: 'get motor_pwm_protocol',
-    gyroDenom: 'get gyro_sync_denom',
-    pidDenom: 'get pid_process_denom',
-  };
-
-  sendCommands(commands).then(response => {
-    const details = setBoardDetails(boardDetailsParser(response));
-
-    dispatch(details);
+  boardDetailsFetcher().then(details => {
+    dispatch(setBoardDetails(details));
   });
 };
 
