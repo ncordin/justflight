@@ -9,8 +9,9 @@ const boardDetailsParser = rawDetails => {
     pidDenom,
   } = rawDetails;
 
-  const versionRegex = /Betaflight \/ (\w+) \((\w+)\) (\S+)/;
-  const [, brand, tag, version] = versionRaw.match(versionRegex) || [];
+  const versionRegex = /(\w+) \/ (\w+) \((\w+)\) (\S+)/;
+  const [, firmware, brand, tag, version] =
+    versionRaw.match(versionRegex) || [];
 
   const [, clock] = status.match(/Clock=(\w+)/) || [];
   const [, load] = status.match(/CPU:(\w+)/) || [];
@@ -26,15 +27,16 @@ const boardDetailsParser = rawDetails => {
     }[clock] || 'F?';
 
   return {
+    firmware: firmware.toUpperCase(),
+    version,
     brand,
     tag,
-    version,
+    family,
     clock,
-    load: `${load}%`,
     gyro,
     protocol,
     loops,
-    family,
+    load: `${load}%`,
   };
 
   return details;

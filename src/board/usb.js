@@ -66,14 +66,14 @@ const listen = (success, failure) => {
       failure();
     } else {
       const integers = new Uint8Array(buffer);
-      logger('info', `data received: ${integers}`);
+      // logger('info', `data received: ${integers}`);
       success(integers);
     }
   });
 };
 
 const send = integers => {
-  logger('info', `sending data: ${integers}`);
+  // logger('info', `sending data: ${integers}`);
   const buffer = formatters.integersToBuffer(integers);
   connection.out.transfer(buffer, (error, data) => {
     error && logger('error', `send failed with error: ${error}`);

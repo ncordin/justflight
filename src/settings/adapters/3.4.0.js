@@ -3,6 +3,24 @@ import board from '../../board';
 const settingHandlers = [];
 
 settingHandlers.push({
+  name: 'receiverPort',
+  read: () => {
+    return board.sendCommand('serial').then(response => {
+      const [, , ...portLines] = response.split('\n');
+      const portLine = portLines.find(line => {
+        const [, , port] = line.split(' ');
+        return port === '64';
+      });
+      const [, port] = portLine.split(' ');
+
+      return parseInt(port) + 1;
+    });
+  },
+  save: ({ channel, rangeMin, rangeMax }) =>
+    board.sendCommand(`aux 0 0 ${channel} ${rangeMin} ${rangeMax} 0`),
+});
+
+settingHandlers.push({
   name: 'minVoltage',
   read: () => {
     return board
@@ -32,11 +50,40 @@ settingHandlers.push({
     });
   },
   save: ({ channel, rangeMin, rangeMax }) =>
-    board.sendCommand(`aux 0 0 ${channel} ${rangeMin} ${rangeMax} 0`),
+    board.sendCommand(`aux 0 0 ${channel - 1} ${rangeMin} ${rangeMax} 0`),
 });
 
 const onSave = (settings, boardDetails) => {
-  board.set('iterm_relax', 3);
+  // Features
+  board.sendCommand('feature -TELEMETRY');
+  board.sendCommand('feature -RX_PARALLEL_PWM');
+  board.sendCommand('feature RX_SERIAL');
+  board.sendCommand('feature AIRMODE');
+  board.set('acc_hardware', 'NONE');
+  board.set('mag_hardware', 'NONE');
+  board.set('baro_hardware', 'NONE');
+
+  // Core speed
+  board.set('motor_pwm_protocol', 'DSHOT600');
+  board.set('gyro_sync_denom', 1);
+  board.set('pid_process_denom', 2);
+
+  // Hype tunning
+  board.set('rc_interp_ch', 'RPYT');
+  board.set('rc_smoothing_type', 'FILTER');
+  board.set('iterm_relax', 'RP');
+  board.set('setpoint_relax_ratio', 20);
+  board.set('dterm_setpoint_weight', 45);
+  board.set('throttle_boost', 10);
+
+  // OSD
+  board.set('osd_rssi_pos', 99);
+  board.set('osd_tim_1_pos', 388);
+  board.set('osd_tim_2_pos', 2435);
+  board.set('osd_warnings_pos', 2313);
+  board.set('osd_avg_cell_voltage_pos', 2446);
+
+  board.sendCommand('save');
 };
 
 const handledParams = ['iterm_relax'];
@@ -50,17 +97,20 @@ export default {
 /*
 --- TUNNING:
 rateprofile 0
+
 set roll_expo = 16
 set pitch_expo = 16
 set yaw_expo = 16
+
 set roll_srate = 75
 set pitch_srate = 75
-set yaw_srate = 76
+set yaw_srate = 75
 
 set dshot_idle_value = 700
 
-set setpoint_relax_ratio = 19
-set dterm_setpoint_weight = 45
+set serialrx_provider = IBUS
+
+set yaw_motors_reversed = ON
 
 set gyro_lowpass_hz = 100
 set gyro_lowpass2_hz = 300
@@ -68,44 +118,5 @@ profile 0
 set dterm_lowpass_hz = 90
 set dterm_lowpass2_hz = 190
 
---- SETUP:
-2 disable = serial 1  0 115200 57600 0 115200
-3 enable  = serial 2 64 115200 57600 0 115200
-set serialrx_provider = IBUS
-
-set yaw_motors_reversed = ON
-
---- DEFAULTS:
-feature -TELEMETRY
-feature AIRMODE
-set acc_hardware = NONE
-
-(AUTO):
-set gyro_sync_denom = 2
-set pid_process_denom = 1
-set motor_pwm_protocol = DSHOT600
-
-/*
-Notifications : saved / usb error / aux 3 is moving
-Loader : rebooting
-
-= Home
-Warning 4 diffs [Show][Reset]
-JustFlight approved
-
-= Tuning
-Rates : [300 - 1300] /!\ Hight # Average
-Expo : [ 1 / 2 / 3 / 4 / 5 ]
-Yaw rates : Checked
-Filters
-Stick responsivity
-Min throttle
-
-= Setup
-Receiver is on AUX [ 1 / 2 / 3 / 4 ]
-Voltage
-Rssi
-Smart audio ?
-Prop direction
-ARM channel
+adjrange  0 0 1(AUX) 900 2100 12(RATE PROFILES) 1(RE AUX) 0 0
 */

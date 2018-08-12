@@ -7,7 +7,16 @@ import Content from '../../components/Content';
 import './Board.css';
 
 const Board = ({ details }) => {
-  const colors = ['#f50', '#2db7f5', '#87d068', '#108ee9', '#fdb92c', '#aaa'];
+  const colors = [
+    '#f50',
+    '#2db7f5',
+    '#87d068',
+    '#108ee9',
+    '#fdb92c',
+    '#aaa',
+    '#eb2f96',
+    '#722ed1',
+  ];
 
   return (
     <Fragment>
@@ -17,16 +26,22 @@ const Board = ({ details }) => {
           <div className="Board-picture">{details.family}</div>
           <div className="Board-details">
             {details &&
-              Object.values(details)
-                .filter(detail => detail)
-                .map((detail, index) => {
+              Object.entries(details)
+                .filter(([_, value]) => value)
+                .filter(([name]) => name !== 'brand')
+                .map(([_, value], index) => {
                   return (
                     <Tag key={index} color={colors[index % colors.length]}>
-                      {detail}
+                      {value}
                     </Tag>
                   );
                 })}
           </div>
+          <p>
+            <br />
+            <br />
+            Ready to fly!
+          </p>
         </Centered>
       </Content>
     </Fragment>
@@ -34,3 +49,11 @@ const Board = ({ details }) => {
 };
 
 export default Board;
+
+/*
+TODO:
+Notifications : saved / usb error / aux 3 is moving
+Loader : rebooting
+Warning 4 diffs [Show][Reset]
+JustFlight approved
+*/

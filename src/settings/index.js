@@ -9,5 +9,6 @@ export const readSettings = () => {
 };
 
 export const saveSettings = settings => {
-  return saveWithAdapter(adapter, settings);
+  saveWithAdapter(adapter, settings);
+  adapter.onSave(settings, {}); // <-- TODO send board details
 };

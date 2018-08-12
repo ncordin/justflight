@@ -8,7 +8,16 @@ const Tunning = () => {
     <Fragment>
       <Header>Tunning</Header>
       <Content>
-        <Centered>In progress...</Centered>
+        <Centered>
+          <p>Rates : [500 - 1200]</p>
+          <p>Expo : [ 1 - 10 ]</p>
+          <p>Yaw rates : [500 - 1200]</p>
+          <p>Yaw expo : [ 1 - 10 ]</p>
+          <p>Stick acceleration [1 - 10]</p>
+          <p>Stick deceleration [1 - 10]</p>
+          <p>Min throttle [4.5 - 10]</p>
+          <p>Filters [1 - 5]</p>
+        </Centered>
       </Content>
     </Fragment>
   );
