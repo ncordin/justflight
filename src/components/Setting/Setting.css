@@ -1,0 +1,14 @@
+.Setting-row {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.Setting-description {
+  flex-basis: 40%;
+  display: flex;
+  align-items: center;
+}
+
+.Setting-value {
+  flex: 1;
+}

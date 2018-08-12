@@ -1,0 +1,13 @@
+.Slider-row {
+  display: flex;
+}
+
+.Slider-bar {
+  flex: 2;
+  padding-right: 8px;
+}
+
+.Slider-input {
+  flex: 1;
+  text-align: right;
+}

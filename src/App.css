@@ -44,9 +44,26 @@
   opacity: 0.4;
 }
 
+.ant-btn-group {
+  display: flex;
+}
+
+.ant-btn-group > .ant-btn {
+  padding: 0;
+  flex: 1;
+}
+
 .ant-btn-primary,
 .ant-btn-primary:hover,
 .ant-btn-primary:focus {
   background-color: #fdb92c;
   border-color: #fdb92c;
+  color: white !important;
+}
+
+.ant-btn,
+.ant-btn:hover,
+.ant-btn:focus {
+  border-color: #fdb92c;
+  color: #2e2e2e;
 }
