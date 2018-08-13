@@ -1,13 +1,32 @@
 import board from '../../board';
 
-import receiverPortHandler from '../handlers/receiverPort';
-import minVoltageHandler from '../handlers/minVoltage';
-import armChannelHandler from '../handlers/armChannel';
+// Tunning
+import rates from '../handlers/rates';
+import expo from '../handlers/expo';
+import stickAcceleration from '../handlers/stickAcceleration-340';
+import stickDeceleration from '../handlers/stickDeceleration-340';
+import idleThrottle from '../handlers/idleThrottle';
+import filters from '../handlers/filters';
+
+// Setup
+import receiverPort from '../handlers/receiverPort';
+import receiverProtocol from '../handlers/receiverProtocol';
+import minVoltage from '../handlers/minVoltage';
+import armChannel from '../handlers/armChannel';
+import propsDirection from '../handlers/propsDirection';
 
 const settingHandlers = [
-  receiverPortHandler,
-  minVoltageHandler,
-  armChannelHandler,
+  rates,
+  expo,
+  stickAcceleration,
+  stickDeceleration,
+  idleThrottle,
+  filters,
+  receiverPort,
+  receiverProtocol,
+  minVoltage,
+  armChannel,
+  propsDirection,
 ];
 
 const onSave = (settings, boardDetails) => {
@@ -26,12 +45,10 @@ const onSave = (settings, boardDetails) => {
   board.set('gyro_sync_denom', 1);
   board.set('pid_process_denom', 2);
 
-  // Hype tunning
+  // Hype tunnings
   board.set('rc_interp_ch', 'RPYT');
   board.set('rc_smoothing_type', 'FILTER');
   board.set('iterm_relax', 'RP');
-  board.set('setpoint_relax_ratio', 20);
-  board.set('dterm_setpoint_weight', 45);
   board.set('throttle_boost', 10);
 
   // OSD
@@ -49,26 +66,8 @@ export default {
 };
 
 /*
---- TUNNING:
+--- TODO:
 rateprofile 0
-
-set roll_expo = 16
-set pitch_expo = 16
-set yaw_expo = 16
-
-set roll_srate = 75
-set pitch_srate = 75
-set yaw_srate = 75
-
-set dshot_idle_value = 700
-set serialrx_provider = IBUS
-set yaw_motors_reversed = ON
-
-set gyro_lowpass_hz = 100
-set gyro_lowpass2_hz = 300
 profile 0
-set dterm_lowpass_hz = 90
-set dterm_lowpass2_hz = 190
-
 adjrange  0 0 1(AUX) 900 2100 12(RATE PROFILES) 1(RE AUX) 0 0
 */

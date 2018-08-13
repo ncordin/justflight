@@ -1,3 +1,7 @@
+import adapters from '../adapters';
+
+export const isVersionSupported = version => adapters[version] !== undefined;
+
 export const readWithAdapter = adapter => {
   const { settingHandlers } = adapter;
 

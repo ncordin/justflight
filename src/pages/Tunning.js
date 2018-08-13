@@ -13,28 +13,24 @@ const Tunning = () => {
         <SettingSlider
           name="rates"
           description="Rates (deg / sec)"
-          min={500}
-          max={1200}
-          step={20}
-          selected={800}
+          min={60}
+          max={85}
+          step={1}
         />
         <SettingChoices
           name="expo"
           description="Expo"
           values={[0, 1, 2, 3, 4, 5, 6, 7, 8]}
-          selected={4}
         />
         <SettingChoices
           name="stickAcceleration"
           description="Stick acceleration"
           values={[0, 1, 2, 3, 4, 5, 6, 7, 8]}
-          selected={4}
         />
         <SettingChoices
           name="stickDeceleration"
-          description="Stick center cooling"
+          description="Stick deceleration"
           values={[0, 2, 4, 6, 8, 10]}
-          selected={2}
         />
         <SettingSlider
           name="idleThrottle"
@@ -42,13 +38,11 @@ const Tunning = () => {
           min={3.5}
           max={10}
           step={0.5}
-          selected={6}
         />
         <SettingChoices
           name="filters"
           description="Filters"
           values={['tolerent', 'default', 'clean']}
-          selected={'default'}
         />
       </Content>
     </Fragment>

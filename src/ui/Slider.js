@@ -18,6 +18,9 @@ class IntegerStep extends Component {
   }
 
   onChange = value => {
+    const { onSelect } = this.props;
+
+    onSelect(value);
     this.setState({
       value,
     });
