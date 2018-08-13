@@ -1,3 +1,4 @@
+import board from '../board';
 import adaptersByVersion from './adapters';
 import { readWithAdapter, saveWithAdapter } from './helpers';
 
@@ -11,4 +12,6 @@ export const readSettings = () => {
 export const saveSettings = settings => {
   saveWithAdapter(adapter, settings);
   adapter.onSave(settings, {}); // <-- TODO send board details
+
+  board.sendCommand('save').catch(() => null);
 };

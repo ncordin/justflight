@@ -13,6 +13,17 @@ const reducer = (state = initialState, { type, payload }) => {
         data: payload,
       };
 
+    case ACTION_TYPES.CHANGE_SETTING:
+      const { name, value } = payload;
+
+      return {
+        hasChanged: true,
+        data: {
+          ...state.data,
+          [name]: value,
+        },
+      };
+
     default:
       return state;
   }

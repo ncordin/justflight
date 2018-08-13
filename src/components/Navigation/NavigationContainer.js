@@ -4,17 +4,20 @@ import { connect } from 'react-redux';
 import { selectCurrentPage } from '../../store/navigation/navigation.selectors';
 import { setCurrentPage } from '../../store/navigation/navigation.actions';
 
+import { selectSettings } from '../../store/settings/settings.selectors';
 import { saveSettings } from '../../settings';
 
 import Navigation from './Navigation';
 class NavigationContainer extends Component {
   render() {
+    const { currentPage, setPage, settings } = this.props;
+
     return (
       <Navigation
-        currentPage={this.props.currentPage}
-        setPage={this.props.setPage}
+        currentPage={currentPage}
+        setPage={setPage}
         onSave={() => {
-          saveSettings({ minVoltage: 3 });
+          saveSettings(settings);
         }}
       />
     );
@@ -23,6 +26,7 @@ class NavigationContainer extends Component {
 
 const mapStateToProps = state => ({
   currentPage: selectCurrentPage(state),
+  settings: selectSettings(state),
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -96,10 +96,11 @@ const sendToUsb = message => {
 };
 
 const onListenFailed = () => {
+  logger('error', 'messsage receiption failed...');
+  clearTimeout(state.controlTimeout);
   state.sending = false;
   state.response = '';
-  // state.reject();
-  logger('error', 'messsage receiption failed...');
+  state.reject();
 };
 
 const sendCommand = command => {

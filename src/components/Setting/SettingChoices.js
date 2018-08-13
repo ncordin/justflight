@@ -1,23 +1,20 @@
 import React from 'react';
-import Choices from '../../ui/Choices';
 
+import ConnectToSetting from './ConnectToSetting';
+import Choices from '../../ui/Choices';
 import './Setting.css';
 
-const SettingChoices = ({ name, description, values, selected }) => {
-  return (
-    <div className="Setting-row">
-      <div className="Setting-description">{description}</div>
-      <div className="Setting-value">
-        <Choices
-          values={values}
-          selected={selected}
-          onSelect={value => {
-            console.log(value);
-          }}
-        />
+const SettingChoices = ({ name, description, values }) => (
+  <ConnectToSetting name={name}>
+    {(selected, onSelect) => (
+      <div className="Setting-row">
+        <div className="Setting-description">{description}</div>
+        <div className="Setting-value">
+          <Choices values={values} selected={selected} onSelect={onSelect} />
+        </div>
       </div>
-    </div>
-  );
-};
+    )}
+  </ConnectToSetting>
+);
 
 export default SettingChoices;
