@@ -1,6 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Slider, InputNumber } from 'antd';
 
+import { closest } from '../helpers/numbers';
 import './Slider.css';
 
 class IntegerStep extends Component {
@@ -28,7 +29,7 @@ class IntegerStep extends Component {
 
   render() {
     const { value } = this.state;
-    const { min, max, step } = this.props;
+    const { min, max, step, marks } = this.props;
 
     return (
       <div className="Slider-row">
@@ -42,13 +43,16 @@ class IntegerStep extends Component {
           />
         </div>
         <div className="Slider-input">
-          <InputNumber
-            min={min}
-            max={max}
-            step={step}
-            value={value}
-            onChange={this.onChange}
-          />
+          {!marks && (
+            <InputNumber
+              min={min}
+              max={max}
+              step={step}
+              value={value}
+              onChange={this.onChange}
+            />
+          )}
+          {marks && closest(marks, value)}
         </div>
       </div>
     );

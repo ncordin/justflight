@@ -5,7 +5,11 @@ import Content from '../components/Content';
 import SettingSlider from '../components/Setting/SettingSlider';
 import SettingChoices from '../components/Setting/SettingChoices';
 
+import { buildSuperRateList } from '../helpers/rates';
+
 const Tunning = () => {
+  const superRates = buildSuperRateList();
+
   return (
     <Fragment>
       <Header>Tunning</Header>
@@ -13,9 +17,9 @@ const Tunning = () => {
         <SettingSlider
           name="rates"
           description="Rates (deg / sec)"
-          min={60}
-          max={85}
-          step={1}
+          min={500}
+          max={1250}
+          marks={Object.values(superRates)}
         />
         <SettingChoices
           name="expo"
