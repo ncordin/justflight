@@ -20,11 +20,11 @@ export const readWithAdapter = adapter => {
 export const saveWithAdapter = (adapter, settings) => {
   const { settingHandlers } = adapter;
 
-  return Object.entries(settings).forEach(([name, value]) => {
+  Object.entries(settings).forEach(([name, value]) => {
     const handler = settingHandlers.find(handler => handler.name === name);
 
     if (handler) {
-      handler.save(value);
+      handler.save(value, settings);
     } else {
       console.error('Missing handler for setting', name);
     }

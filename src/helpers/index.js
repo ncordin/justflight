@@ -38,8 +38,6 @@ const boardDetailsParser = rawDetails => {
     loops,
     load: `${load}%`,
   };
-
-  return details;
 };
 
 export const boardDetailsFetcher = () => {

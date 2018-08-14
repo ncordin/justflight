@@ -6,6 +6,7 @@ const channelsToDisplay = {
   1: 'AUX 2',
   2: 'AUX 3',
 };
+
 const read = () => {
   return board.sendCommand('aux').then(response => {
     const [, armLine] = response.split('\n');

@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Content from '../components/Content';
 import SettingSlider from '../components/Setting/SettingSlider';
 import SettingChoices from '../components/Setting/SettingChoices';
+import SettingExpo from '../components/Setting/SettingExpo';
 
 import { buildSuperRateList } from '../helpers/rates';
 
@@ -16,16 +17,12 @@ const Tunning = () => {
       <Content>
         <SettingSlider
           name="rates"
-          description="Rates (deg / sec)"
+          description="Velocity (deg / sec)"
           min={500}
           max={1250}
           marks={Object.values(superRates)}
         />
-        <SettingChoices
-          name="expo"
-          description="Expo"
-          values={[0, 1, 2, 3, 4, 5, 6, 7, 8]}
-        />
+        <SettingExpo />
         <SettingChoices
           name="stickAcceleration"
           description="Stick acceleration"
