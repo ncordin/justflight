@@ -3,23 +3,24 @@ import { connect } from 'react-redux';
 
 import { selectCurrentPage } from '../../store/navigation/navigation.selectors';
 import { setCurrentPage } from '../../store/navigation/navigation.actions';
-
-import { selectSettings } from '../../store/settings/settings.selectors';
-import { selectBoardDetails } from '../../store/board/board.selectors';
-import { saveSettings } from '../../settings';
+import { saveSettings } from '../../store/settings/settings.actions';
+import {
+  selectChanges,
+  selectIsSaving,
+} from '../../store/settings/settings.selectors';
 
 import Navigation from './Navigation';
 class NavigationContainer extends Component {
   render() {
-    const { currentPage, setPage, settings, boardDetails } = this.props;
+    const { currentPage, setPage, changes, isSaving, save } = this.props;
 
     return (
       <Navigation
         currentPage={currentPage}
         setPage={setPage}
-        onSave={() => {
-          saveSettings(settings, boardDetails);
-        }}
+        changes={changes}
+        isSaving={isSaving}
+        onSave={save}
       />
     );
   }
@@ -27,12 +28,13 @@ class NavigationContainer extends Component {
 
 const mapStateToProps = state => ({
   currentPage: selectCurrentPage(state),
-  settings: selectSettings(state),
-  boardDetails: selectBoardDetails(state),
+  changes: selectChanges(state),
+  isSaving: selectIsSaving(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   setPage: page => dispatch(setCurrentPage(page)),
+  save: () => dispatch(saveSettings()),
 });
 
 export default connect(

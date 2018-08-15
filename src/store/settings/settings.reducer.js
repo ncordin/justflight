@@ -1,27 +1,40 @@
 import { ACTION_TYPES } from './settings.actions';
 
 const initialState = {
-  hasChanged: false,
   data: {},
+  changes: {},
+  saving: false,
 };
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case ACTION_TYPES.READ_SETTINGS_SUCCESS:
       return {
-        hasChanged: false,
         data: payload,
+        changes: {},
+        saving: false,
       };
 
     case ACTION_TYPES.CHANGE_SETTING:
       const { name, value } = payload;
 
       return {
-        hasChanged: true,
+        ...state,
+        changes: {
+          ...state.changes,
+          [name]: true,
+        },
         data: {
           ...state.data,
           [name]: value,
         },
+      };
+
+    case ACTION_TYPES.SAVE_SETTINGS:
+      return {
+        ...state,
+        changes: {},
+        saving: true,
       };
 
     default:

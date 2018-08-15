@@ -67,3 +67,7 @@
   border-color: #fdb92c;
   color: #2e2e2e;
 }
+
+.ant-badge-count {
+  box-shadow: none !important;
+}
