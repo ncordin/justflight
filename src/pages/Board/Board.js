@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { Tag } from 'antd';
 
 import Centered from '../../ui/Centered';
@@ -27,9 +28,9 @@ const Board = ({ details }) => {
           <div className="Board-details">
             {details &&
               Object.entries(details)
-                .filter(([_, value]) => value)
+                .filter(([, value]) => value)
                 .filter(([name]) => name !== 'brand')
-                .map(([_, value], index) => {
+                .map(([, value], index) => {
                   return (
                     <Tag key={index} color={colors[index % colors.length]}>
                       {value}
@@ -46,6 +47,10 @@ const Board = ({ details }) => {
       </Content>
     </Fragment>
   );
+};
+
+Board.propTypes = {
+  details: PropTypes.object.isRequired,
 };
 
 export default Board;

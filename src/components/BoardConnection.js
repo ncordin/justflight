@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import board from '../board';
@@ -28,6 +29,12 @@ class BoardConnection extends Component {
     return children;
   }
 }
+
+BoardConnection.propTypes = {
+  onBoardConnect: PropTypes.func.isRequired,
+  onBoardDisconnect: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};
 
 const mapDispatchToProps = dispatch => ({
   onBoardConnect: () => {

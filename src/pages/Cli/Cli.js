@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { Form, Input, Icon } from 'antd';
 import Header from '../../components/Header';
 import Content from '../../components/Content';
@@ -60,5 +61,10 @@ class Cli extends Component {
     );
   }
 }
+
+Cli.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  response: PropTypes.string.isRequired,
+};
 
 export default Cli;

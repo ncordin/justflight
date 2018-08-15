@@ -108,6 +108,7 @@ const sendCommand = command => {
   return sendToUsb(formatters.stringToIntegers(`${command}\n`));
 };
 
+/*
 const sendMSPCommand = code => {
   const mspMessage = [36, 77, 60, 0, code]; // headers & data length & code
   mspMessage.push(mspMessage[3] ^ mspMessage[4]); // checksum
@@ -116,11 +117,12 @@ const sendMSPCommand = code => {
 };
 
 const reboot = () => {
-  // sendCommand('exit');
+  sendCommand('exit');
   sendMSPCommand(constants.MSP_CODES.REBOOT);
   state.sending = false;
   state.response = '';
 };
+*/
 
 export default {
   onConnect,

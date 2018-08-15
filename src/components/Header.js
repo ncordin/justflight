@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Header = ({ children }) => {
   return (
@@ -6,6 +7,10 @@ const Header = ({ children }) => {
       <h1>{children}</h1>
     </div>
   );
+};
+
+Header.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default Header;

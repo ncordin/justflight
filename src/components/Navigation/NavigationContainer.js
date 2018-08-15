@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { selectCurrentPage } from '../../store/navigation/navigation.selectors';
@@ -25,6 +26,14 @@ class NavigationContainer extends Component {
     );
   }
 }
+
+NavigationContainer.propTypes = {
+  currentPage: PropTypes.string,
+  setPage: PropTypes.func.isRequired,
+  changes: PropTypes.number.isRequired,
+  isSaving: PropTypes.bool.isRequired,
+  save: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({
   currentPage: selectCurrentPage(state),

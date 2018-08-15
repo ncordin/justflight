@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { first, last } from 'lodash';
 
@@ -16,9 +17,14 @@ const SettingExpo = ({ velocity }) => {
       description="Mid-range velocity"
       min={first(expos)}
       max={last(expos)}
+      step={1}
       marks={expos}
     />
   );
+};
+
+SettingExpo.propTypes = {
+  velocity: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => ({

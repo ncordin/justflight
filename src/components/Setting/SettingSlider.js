@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import ConnectToSetting from './ConnectToSetting';
 import Slider from '../../ui/Slider';
@@ -23,5 +24,14 @@ const SettingSlider = ({ name, description, min, max, step, marks }) => (
     )}
   </ConnectToSetting>
 );
+
+SettingSlider.propTypes = {
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  min: PropTypes.number.isRequired,
+  max: PropTypes.number.isRequired,
+  step: PropTypes.number.isRequired,
+  marks: PropTypes.array,
+};
 
 export default SettingSlider;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Button, Icon, Badge } from 'antd';
 
 import Logo from '../../components/Logo';
@@ -49,5 +50,13 @@ class Navigation extends Component {
     );
   }
 }
+
+Navigation.propTypes = {
+  currentPage: PropTypes.string,
+  setPage: PropTypes.func.isRequired,
+  changes: PropTypes.number.isRequired,
+  isSaving: PropTypes.bool.isRequired,
+  onSave: PropTypes.func.isRequired,
+};
 
 export default Navigation;

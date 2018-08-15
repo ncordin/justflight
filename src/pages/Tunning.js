@@ -20,6 +20,7 @@ const Tunning = () => {
           description="Velocity (deg / sec)"
           min={500}
           max={1250}
+          step={1}
           marks={Object.values(superRates)}
         />
         <SettingExpo />
