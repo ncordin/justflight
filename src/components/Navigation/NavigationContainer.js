@@ -5,19 +5,20 @@ import { selectCurrentPage } from '../../store/navigation/navigation.selectors';
 import { setCurrentPage } from '../../store/navigation/navigation.actions';
 
 import { selectSettings } from '../../store/settings/settings.selectors';
+import { selectBoardDetails } from '../../store/board/board.selectors';
 import { saveSettings } from '../../settings';
 
 import Navigation from './Navigation';
 class NavigationContainer extends Component {
   render() {
-    const { currentPage, setPage, settings } = this.props;
+    const { currentPage, setPage, settings, boardDetails } = this.props;
 
     return (
       <Navigation
         currentPage={currentPage}
         setPage={setPage}
         onSave={() => {
-          saveSettings(settings);
+          saveSettings(settings, boardDetails);
         }}
       />
     );
@@ -27,6 +28,7 @@ class NavigationContainer extends Component {
 const mapStateToProps = state => ({
   currentPage: selectCurrentPage(state),
   settings: selectSettings(state),
+  boardDetails: selectBoardDetails(state),
 });
 
 const mapDispatchToProps = dispatch => ({

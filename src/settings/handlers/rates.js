@@ -1,15 +1,17 @@
 import board from '../../board';
 import { findSuperRateFromVelocity } from '../../helpers/rates';
 import { buildSuperRateList } from '../../helpers/rates';
-
-const FIXED_RC_RATE = 2.0;
+import {
+  FIXED_RC_RATE,
+  DEFAULT_VELOCITY,
+} from '../../constants/settings.constants';
 
 const read = () => {
   return board.get('roll_srate').then(response => {
     const superRate = (response / 100).toFixed(2);
     const superRates = buildSuperRateList();
 
-    return superRates[superRate];
+    return superRates[superRate] || DEFAULT_VELOCITY;
   });
 };
 

@@ -30,7 +30,6 @@ const settingHandlers = [
 ];
 
 const onSave = (settings, boardDetails) => {
-  /*
   // Features
   board.sendCommand('feature -TELEMETRY');
   board.sendCommand('feature -RX_PARALLEL_PWM');
@@ -43,7 +42,7 @@ const onSave = (settings, boardDetails) => {
   // Core speed
   board.set('motor_pwm_protocol', 'DSHOT600');
   board.set('gyro_sync_denom', 1);
-  board.set('pid_process_denom', 2);
+  board.set('pid_process_denom', boardDetails.family === 'F4' ? 1 : 2);
 
   // Hype tunnings
   board.set('rc_interp_ch', 'RPYT');
@@ -57,7 +56,6 @@ const onSave = (settings, boardDetails) => {
   board.set('osd_tim_2_pos', 2435);
   board.set('osd_warnings_pos', 2313);
   board.set('osd_avg_cell_voltage_pos', 2446);
-  */
 };
 
 export default {

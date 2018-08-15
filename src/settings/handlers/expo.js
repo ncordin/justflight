@@ -2,17 +2,28 @@ import board from '../../board';
 import { getVelocity } from '../../helpers/rates';
 import { findSuperRateFromVelocity } from '../../helpers/rates';
 import { findExpoFromMidVelocity } from '../../helpers/rates';
+import {
+  FIXED_RC_RATE,
+  DEFAULT_MID_VELOCITY,
+} from '../../constants/settings.constants';
 
 const read = () => {
   const superRatePromise = board.get('roll_srate');
   const expoPromise = board.get('roll_expo');
+  const rcRatePromise = board.get('roll_rc_rate');
 
-  return Promise.all([superRatePromise, expoPromise]).then(response => {
-    const superRate = (response[0] / 100).toFixed(2);
-    const expo = (response[1] / 100).toFixed(2);
+  return Promise.all([superRatePromise, expoPromise, rcRatePromise]).then(
+    response => {
+      if (parseInt(response[2]) !== FIXED_RC_RATE * 100) {
+        return DEFAULT_MID_VELOCITY;
+      }
 
-    return getVelocity(0.5, superRate, expo);
-  });
+      const superRate = (response[0] / 100).toFixed(2);
+      const expo = (response[1] / 100).toFixed(2);
+
+      return getVelocity(0.5, superRate, expo);
+    }
+  );
 };
 
 const save = (midVelocity, { rates }) => {

@@ -1,7 +1,6 @@
 import { findKey, clamp, range } from 'lodash';
 import { closest } from './numbers';
-
-const FIXED_RC_RATE = 2.0;
+import { FIXED_RC_RATE } from '../constants/settings.constants';
 
 export const getVelocity = function(rcInput, superRate, expo) {
   if (expo) {
@@ -15,7 +14,7 @@ export const getVelocity = function(rcInput, superRate, expo) {
     angleRate *= rcSuperFactor;
   }
 
-  return angleRate;
+  return Math.round(angleRate);
 };
 
 export const buildSuperRateList = () => {
