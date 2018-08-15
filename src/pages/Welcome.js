@@ -18,7 +18,7 @@ const Welcome = () => {
         </div>
         <h2>Welcome!</h2>
         <p>
-          Please, connect your <strong>Betaflight</strong> board to USB.
+          Please, connect a <strong>Betaflight</strong> board to USB.
         </p>
       </Centered>
     </Content>

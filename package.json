@@ -13,7 +13,7 @@
     "justflight",
     "betaflight"
   ],
-  "main": "config/electron.js",
+  "main": "main.js",
   "scripts": {
     "prod": "webpack --config ./config/webpack.build.js && electron --noDevServer .",
     "dev": "webpack-dev-server --hot --host 0.0.0.0 --config=./config/webpack.dev.js",
