@@ -51,11 +51,14 @@ const onSave = (settings, boardDetails) => {
   board.set('throttle_boost', 10);
 
   // OSD
-  board.set('osd_rssi_pos', 99);
-  board.set('osd_tim_1_pos', 388);
-  board.set('osd_tim_2_pos', 2435);
+  board.set('osd_tim_2_pos', 2433);
   board.set('osd_warnings_pos', 2313);
-  board.set('osd_avg_cell_voltage_pos', 2446);
+  board.set('osd_avg_cell_voltage_pos', 2455);
+  board.set('osd_stat_max_spd', 'OFF');
+  board.set('osd_stat_min_rssi', 'OFF');
+  board.set('osd_stat_max_curr', 'OFF');
+  board.set('osd_stat_used_mah', 'OFF');
+  board.set('osd_stat_bbox', 'OFF');
 };
 
 export default {

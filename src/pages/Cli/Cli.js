@@ -4,7 +4,7 @@ import { Form, Input, Icon } from 'antd';
 import Header from '../../components/Header';
 import Content from '../../components/Content';
 
-import Mosquito from '../../assets/mosquito.svg';
+import Logo from '../../assets/cloud.svg';
 import './Cli.css';
 
 class Cli extends Component {
@@ -41,7 +41,7 @@ class Cli extends Component {
         <Content className="Cli-container">
           <div className="Cli-response">
             <div className="Cli-response-picture">
-              <Mosquito />
+              <Logo />
             </div>
             <div className="Cli-response-text">{response}</div>
           </div>

@@ -12,7 +12,7 @@ const Setup = () => {
         <SettingChoices
           name="receiverPort"
           description="Receiver port"
-          values={['UART 1', 'UART 2', 'UART 3']}
+          values={['UART 1', 'UART 3', 'UART 6']}
         />
         <SettingChoices
           name="receiverProtocol"

@@ -19,7 +19,7 @@ const read = () => {
 const save = display => {
   const channel = findKey(channelsToDisplay, value => value === display);
 
-  board.sendCommand(`aux 0 0 ${channel} 900 1100 0`);
+  board.sendCommand(`aux 0 0 ${channel} 1400 2100 0`);
 };
 
 export default {
