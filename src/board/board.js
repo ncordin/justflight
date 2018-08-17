@@ -40,9 +40,12 @@ const state = {
 };
 
 const areMessagesEqual = (messageA, messageB) => {
-  return messageA.every((integer, index) => {
-    return messageB[index] === integer;
-  });
+  return (
+    messageA.length &&
+    messageA.every((integer, index) => {
+      return messageB[index] === integer;
+    })
+  );
 };
 
 const isMessageComplete = integers => {
@@ -56,14 +59,14 @@ const isMessageComplete = integers => {
 
 const receiveData = integers => {
   if (state.sending) {
-    const text = formatters.integersToString(integers);
-    state.response += text;
+    state.response.push(...integers);
 
-    if (isMessageComplete(integers)) {
-      logger('success', `message received ${state.response}`);
+    if (isMessageComplete(state.response)) {
+      const text = formatters.integersToString(state.response);
+      logger('success', `message received ${text}`);
       state.sending = false;
       clearTimeout(state.controlTimeout);
-      state.resolve(state.response);
+      state.resolve(text);
     } else {
       usb.listen(receiveData, onListenFailed);
     }
@@ -78,7 +81,7 @@ const sendToUsb = message => {
     throw new Error('Send message failed! Board is already sending...');
   }
   state.sending = true;
-  state.response = '';
+  state.response = [];
   state.promise = new Promise((resolve, reject) => {
     state.resolve = resolve;
     state.reject = reject;
@@ -99,7 +102,7 @@ const onListenFailed = () => {
   logger('error', 'messsage receiption failed...');
   clearTimeout(state.controlTimeout);
   state.sending = false;
-  state.response = '';
+  state.response = [];
   state.reject();
 };
 
@@ -120,7 +123,7 @@ const reboot = () => {
   sendCommand('exit');
   sendMSPCommand(constants.MSP_CODES.REBOOT);
   state.sending = false;
-  state.response = '';
+  state.response = [];
 };
 */
 
