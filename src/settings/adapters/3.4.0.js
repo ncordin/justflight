@@ -4,7 +4,7 @@ import board from '../../board';
 import rates from '../handlers/rates';
 import expo from '../handlers/expo';
 import stickAcceleration from '../handlers/stickAcceleration-340';
-import stickDeceleration from '../handlers/stickDeceleration-340';
+import stickTransition from '../handlers/stickTransition-340';
 import idleThrottle from '../handlers/idleThrottle';
 import filters from '../handlers/filters';
 
@@ -19,7 +19,7 @@ const settingHandlers = [
   rates,
   expo,
   stickAcceleration,
-  stickDeceleration,
+  stickTransition,
   idleThrottle,
   filters,
   receiverPort,

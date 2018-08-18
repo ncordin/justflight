@@ -1,6 +1,6 @@
 import board from '../../board';
 
-const CONVERSION_RATIO = 25;
+const CONVERSION_RATIO = 10;
 
 const read = () => {
   return board

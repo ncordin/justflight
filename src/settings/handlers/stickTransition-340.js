@@ -13,7 +13,7 @@ const save = value => {
 };
 
 export default {
-  name: 'stickDeceleration',
+  name: 'stickTransition',
   read,
   save,
 };

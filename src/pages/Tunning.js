@@ -27,11 +27,11 @@ const Tunning = () => {
         <SettingChoices
           name="stickAcceleration"
           description="Stick acceleration"
-          values={[0, 1, 2, 3, 4, 5, 6, 7, 8]}
+          values={[0, 2, 4, 6, 8, 10, 12]}
         />
         <SettingChoices
-          name="stickDeceleration"
-          description="Stick deceleration"
+          name="stickTransition"
+          description="Stick transition"
           values={[0, 2, 4, 6, 8, 10]}
         />
         <SettingSlider
