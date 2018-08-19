@@ -32,7 +32,7 @@ const Tunning = () => {
         <SettingChoices
           name="stickTransition"
           description="Stick transition"
-          values={[0, 2, 4, 6, 8, 10]}
+          values={['smooth', 'medium', 'twitchy']}
         />
         <SettingSlider
           name="idleThrottle"
