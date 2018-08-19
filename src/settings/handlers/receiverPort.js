@@ -1,35 +1,39 @@
 import { findKey } from 'lodash';
 import board from '../../board';
 
-const portsToUart = {
-  0: 'UART 1',
-  1: 'UART 2',
-  2: 'UART 3',
-};
+const MASK = '64';
+
+const portToDisplay = port => `UART ${parseInt(port) + 1}`;
+const displayToPort = display => parseInt(display.slice(5)) - 1;
 
 const read = () => {
   return board.sendCommand('serial').then(response => {
     const [, , ...portLines] = response.split('\n');
-    const portLine =
-      portLines.find(line => {
-        const [, , bit] = line.split(' ');
-        return bit === '64';
-      }) || 'mock 0';
+    const ports = portLines.reduce((accumulator, current) => {
+      const [lineType, port, mask] = current.split(' ');
 
-    const [, port] = portLine.split(' ');
-    const current = portsToUart[parseInt(port)];
+      return lineType === 'serial'
+        ? { ...accumulator, [port]: mask }
+        : accumulator;
+    }, {});
 
-    return { current, choices: Object.values(portsToUart) };
+    const choices = Object.keys(ports).map(port => portToDisplay(port));
+    const current = findKey(ports, value => value === MASK) || 0;
+
+    return { current: portToDisplay(current), choices };
   });
 };
 
-const save = uart => {
-  const port = findKey(portsToUart, value => value === uart);
+const save = ({ current, choices }) => {
+  const selectedPort = displayToPort(current);
 
-  board.sendCommand(`serial 0 0 115200 57600 0 115200`);
-  board.sendCommand(`serial 2 0 115200 57600 0 115200`);
-  board.sendCommand(`serial 5 0 115200 57600 0 115200`);
-  board.sendCommand(`serial ${port} 64 115200 57600 0 115200`);
+  choices.forEach(display => {
+    const port = displayToPort(display);
+
+    board.sendCommand(`serial ${port} 0 115200 57600 0 115200`);
+  });
+
+  board.sendCommand(`serial ${selectedPort} ${MASK} 115200 57600 0 115200`);
 };
 
 export default {
