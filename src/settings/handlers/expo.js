@@ -12,8 +12,8 @@ const read = () => {
   const expoPromise = board.get('roll_expo');
   const rcRatePromise = board.get('roll_rc_rate');
 
-  return Promise.all([superRatePromise, expoPromise, rcRatePromise]).then(
-    response => {
+  return Promise.all([superRatePromise, expoPromise, rcRatePromise])
+    .then(response => {
       if (parseInt(response[2]) !== FIXED_RC_RATE * 100) {
         return DEFAULT_MID_VELOCITY;
       }
@@ -22,11 +22,11 @@ const read = () => {
       const expo = (response[1] / 100).toFixed(2);
 
       return getVelocity(0.5, superRate, expo);
-    }
-  );
+    })
+    .then(current => ({ current }));
 };
 
-const save = (midVelocity, { rates }) => {
+const save = ({ current: midVelocity }, { rates }) => {
   const superRate = findSuperRateFromVelocity(rates);
   const expo = findExpoFromMidVelocity(superRate, midVelocity);
   const formattedValue = parseInt(expo * 100);

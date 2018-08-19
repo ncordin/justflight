@@ -6,7 +6,7 @@ import { selectSetting } from '../../store/settings/settings.selectors';
 import { changeSetting } from '../../store/settings/settings.actions';
 
 const connectToSettingByName = name => {
-  const mapStateToProps = state => ({ selected: selectSetting(state, name) });
+  const mapStateToProps = state => ({ setting: selectSetting(state, name) });
   const mapDispatchToProps = dispatch => ({
     onSelect: value => dispatch(changeSetting(name, value)),
   });
@@ -17,8 +17,8 @@ const connectToSettingByName = name => {
   );
 };
 
-const RenderChildren = ({ selected, onSelect, children }) => {
-  return children(selected, onSelect);
+const RenderChildren = ({ setting, onSelect, children }) => {
+  return children(setting, onSelect);
 };
 
 const ConnectToSetting = ({ name, children }) => {

@@ -1,11 +1,13 @@
 import board from '../../board';
 
 const read = () => {
-  return board.get('serialrx_provider');
+  return board.get('serialrx_provider').then(current => ({
+    current,
+  }));
 };
 
-const save = value => {
-  board.set('serialrx_provider', value);
+const save = ({ current }) => {
+  board.set('serialrx_provider', current);
 };
 
 export default {

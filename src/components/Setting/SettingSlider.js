@@ -7,7 +7,7 @@ import './Setting.css';
 
 const SettingSlider = ({ name, description, min, max, step, marks }) => (
   <ConnectToSetting name={name}>
-    {(selected, onSelect) => (
+    {(setting, onSelect) => (
       <div className="Setting-row">
         <div className="Setting-description">{description}</div>
         <div className="Setting-value">
@@ -16,7 +16,7 @@ const SettingSlider = ({ name, description, min, max, step, marks }) => (
             max={max}
             step={step}
             marks={marks}
-            selected={selected}
+            selected={setting.current}
             onSelect={onSelect}
           />
         </div>

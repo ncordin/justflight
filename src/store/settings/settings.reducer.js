@@ -17,6 +17,7 @@ const reducer = (state = initialState, { type, payload }) => {
 
     case ACTION_TYPES.CHANGE_SETTING:
       const { name, value } = payload;
+      const previousSetting = state.data[name];
 
       return {
         ...state,
@@ -26,7 +27,7 @@ const reducer = (state = initialState, { type, payload }) => {
         },
         data: {
           ...state.data,
-          [name]: value,
+          [name]: { ...previousSetting, current: value },
         },
       };
 

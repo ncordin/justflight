@@ -3,8 +3,8 @@ import board from '../../board';
 
 const portsToUart = {
   0: 'UART 1',
+  1: 'UART 2',
   2: 'UART 3',
-  5: 'UART 6',
 };
 
 const read = () => {
@@ -17,8 +17,9 @@ const read = () => {
       }) || 'mock 0';
 
     const [, port] = portLine.split(' ');
+    const current = portsToUart[parseInt(port)];
 
-    return portsToUart[parseInt(port)];
+    return { current, choices: Object.values(portsToUart) };
   });
 };
 

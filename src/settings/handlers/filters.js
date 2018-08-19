@@ -23,11 +23,12 @@ const read = () => {
     .get('gyro_lowpass_hz')
     .then(response =>
       findKey(filters, ([gyroLowpass]) => gyroLowpass === parseInt(response))
-    );
+    )
+    .then(current => ({ current }));
 };
 
-const save = display => {
-  const values = filters[display];
+const save = ({ current }) => {
+  const values = filters[current];
 
   board.set('gyro_lowpass_hz', values[0]);
   board.set('gyro_lowpass2_hz', values[1]);

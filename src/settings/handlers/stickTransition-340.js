@@ -10,11 +10,12 @@ const DISPLAY_VALUES = {
 const read = () => {
   return board
     .get('setpoint_relax_ratio')
-    .then(response => DISPLAY_VALUES[response]);
+    .then(response => DISPLAY_VALUES[response])
+    .then(current => ({ current }));
 };
 
-const save = displayValue => {
-  const value = findKey(DISPLAY_VALUES, value => value === displayValue);
+const save = ({ current }) => {
+  const value = findKey(DISPLAY_VALUES, value => value === current);
 
   board.set('setpoint_relax_ratio', value);
 };

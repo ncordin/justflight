@@ -5,11 +5,12 @@ const CONVERSION_RATIO = 100;
 const read = () => {
   return board
     .get('dshot_idle_value')
-    .then(response => parseFloat(response / CONVERSION_RATIO));
+    .then(response => parseFloat(response / CONVERSION_RATIO))
+    .then(current => ({ current }));
 };
 
-const save = value => {
-  board.set('dshot_idle_value', value * CONVERSION_RATIO);
+const save = ({ current }) => {
+  board.set('dshot_idle_value', current * CONVERSION_RATIO);
 };
 
 export default {

@@ -7,11 +7,15 @@ import './Setting.css';
 
 const SettingChoices = ({ name, description, values }) => (
   <ConnectToSetting name={name}>
-    {(selected, onSelect) => (
+    {(setting, onSelect) => (
       <div className="Setting-row">
         <div className="Setting-description">{description}</div>
         <div className="Setting-value">
-          <Choices values={values} selected={selected} onSelect={onSelect} />
+          <Choices
+            values={values || setting.choices}
+            selected={setting.current}
+            onSelect={onSelect}
+          />
         </div>
       </div>
     )}
@@ -21,7 +25,7 @@ const SettingChoices = ({ name, description, values }) => (
 SettingChoices.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  values: PropTypes.array.isRequired,
+  values: PropTypes.array,
 };
 
 export default SettingChoices;

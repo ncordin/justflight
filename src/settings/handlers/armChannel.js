@@ -11,13 +11,14 @@ const read = () => {
   return board.sendCommand('aux').then(response => {
     const [, armLine] = response.split('\n');
     const [, , , channel] = armLine.split(' ');
+    const current = channelsToDisplay[parseInt(channel)];
 
-    return channelsToDisplay[parseInt(channel)];
+    return { current };
   });
 };
 
-const save = display => {
-  const channel = findKey(channelsToDisplay, value => value === display);
+const save = ({ current }) => {
+  const channel = findKey(channelsToDisplay, value => value === current);
 
   board.sendCommand(`aux 0 0 ${channel} 1400 2100 0`);
 };

@@ -9,11 +9,7 @@ const Setup = () => {
     <Fragment>
       <Header>Setup</Header>
       <Content>
-        <SettingChoices
-          name="receiverPort"
-          description="Receiver port"
-          values={['UART 1', 'UART 3', 'UART 6']}
-        />
+        <SettingChoices name="receiverPort" description="Receiver port" />
         <SettingChoices
           name="receiverProtocol"
           description="Receiver protocol"
