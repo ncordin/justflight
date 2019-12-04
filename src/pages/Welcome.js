@@ -14,7 +14,7 @@ const Welcome = () => {
         </h1>
         <div className="details">A very simple Betaflight configurator.</div>
         <div style={{ margin: 12 }}>
-          <Cloud height={250} />
+          <img src={Cloud} alt="Cloud" style={{ height: 250 }} />
         </div>
         <h2>Welcome!</h2>
         <p>

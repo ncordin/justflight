@@ -1,7 +1,9 @@
-import usb from 'usb';
 import formatters from './formatters';
 import { createLogger } from './logger';
 import { findInterface, findEndpoint } from './usb.helpers';
+
+const electron = window.require('electron');
+const usb = electron.remote.require('usb');
 
 const connection = {
   device: null,
@@ -114,3 +116,5 @@ export default {
   onDevicePlugged,
   onUnplugged,
 };
+
+export const LIBUSB_TRANSFER_TYPE_BULK = usb.LIBUSB_TRANSFER_TYPE_BULK;

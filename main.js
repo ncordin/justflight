@@ -4,41 +4,40 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 
-let mainWindow;
-let dev = false;
-
-if (
+const isDev =
   process.defaultApp ||
   /[\\/]electron-prebuilt[\\/]/.test(process.execPath) ||
-  /[\\/]electron[\\/]/.test(process.execPath)
-) {
-  dev = true;
-}
+  /[\\/]electron[\\/]/.test(process.execPath);
+
+let mainWindow;
 
 function createWindow() {
   const appWidth = 450;
   const appHeight = 600;
 
   mainWindow = new BrowserWindow({
-    width: dev ? appWidth + 500 : appWidth,
+    width: isDev ? appWidth + 500 : appWidth,
     height: appHeight,
     show: false,
+    webPreferences: {
+      nodeIntegration: true,
+    },
   });
 
   let indexPath;
-  if (dev && process.argv.indexOf('--noDevServer') === -1) {
+  if (isDev) {
     process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true;
 
     indexPath = url.format({
       protocol: 'http:',
-      host: 'localhost:8080',
+      host: 'localhost:3000',
       pathname: 'index.html',
       slashes: true,
     });
   } else {
     indexPath = url.format({
       protocol: 'file:',
-      pathname: path.join(__dirname, 'dist', 'index.html'),
+      pathname: path.join(__dirname, 'build', 'index.html'),
       slashes: true,
     });
   }
@@ -46,7 +45,7 @@ function createWindow() {
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
-    if (dev) {
+    if (isDev) {
       mainWindow.webContents.openDevTools();
     }
   });

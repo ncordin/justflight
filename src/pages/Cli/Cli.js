@@ -41,7 +41,7 @@ class Cli extends Component {
         <Content className="Cli-container">
           <div className="Cli-response">
             <div className="Cli-response-picture">
-              <Logo />
+              <img src={Logo} alt="Cloud" style={{ height: 350 }} />
             </div>
             <div className="Cli-response-text">{response}</div>
           </div>
