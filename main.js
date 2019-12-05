@@ -4,16 +4,31 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 
-const isDev =
-  process.defaultApp ||
-  /[\\/]electron-prebuilt[\\/]/.test(process.execPath) ||
-  /[\\/]electron[\\/]/.test(process.execPath);
-
 let mainWindow;
+
+function getWebAppUrl(isDev) {
+  return isDev
+    ? url.format({
+        protocol: 'http:',
+        host: 'localhost:3000',
+        pathname: 'index.html',
+        slashes: true,
+      })
+    : url.format({
+        protocol: 'file:',
+        pathname: path.join(__dirname, 'build', 'index.html'),
+        slashes: true,
+      });
+}
 
 function createWindow() {
   const appWidth = 450;
   const appHeight = 600;
+
+  const isDev =
+    process.defaultApp ||
+    /[\\/]electron-prebuilt[\\/]/.test(process.execPath) ||
+    /[\\/]electron[\\/]/.test(process.execPath);
 
   mainWindow = new BrowserWindow({
     width: isDev ? appWidth + 500 : appWidth,
@@ -24,24 +39,13 @@ function createWindow() {
     },
   });
 
-  let indexPath;
   if (isDev) {
     process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true;
-
-    indexPath = url.format({
-      protocol: 'http:',
-      host: 'localhost:3000',
-      pathname: 'index.html',
-      slashes: true,
-    });
-  } else {
-    indexPath = url.format({
-      protocol: 'file:',
-      pathname: path.join(__dirname, 'build', 'index.html'),
-      slashes: true,
-    });
   }
-  mainWindow.loadURL(indexPath);
+
+  const webViewPath = getWebAppUrl(isDev);
+
+  setTimeout(() => mainWindow.loadURL(webViewPath), isDev ? 4000 : 0);
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();

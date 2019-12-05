@@ -5,22 +5,15 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Locks
-yarn.lock
-
 # Compiled binary addons
-dist/
 build/
-builds/
+packages/
 
 # Dependency directories
 node_modules/
 
 # Optional npm cache directory
 .npm
-
-# dotenv environment variables file
-.env
 
 # OS
 .DS_Store

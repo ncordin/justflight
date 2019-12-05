@@ -129,7 +129,6 @@ const reboot = () => {
 
 export default {
   onConnect,
-  connect,
   sendCommand,
   onUnplugged: usb.onUnplugged,
 };

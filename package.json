@@ -16,10 +16,9 @@
   "main": "main.js",
   "homepage": "./",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm run electron > /dev/null | react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "electron": "electron .",
     "postinstall": "electron-rebuild --force",
     "package": "electron-packager ./ --out=./packages"

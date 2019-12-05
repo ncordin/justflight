@@ -9,7 +9,8 @@ const isInterfaceCoolEnougth = activeInterface => {
 };
 
 export const findInterface = device => {
-  const [activeInterface] = device.interfaces.filter(activeInterface =>
+  const interfaces = [device.interface(0), device.interface(1)];
+  const [activeInterface] = interfaces.filter(activeInterface =>
     isInterfaceCoolEnougth(activeInterface)
   );
   return activeInterface;
