@@ -21,7 +21,8 @@ const set = (property, value) => {
 };
 
 export default {
-  ...board,
+  onConnect: board.onConnect,
+  onUnplugged: board.onUnplugged,
   sendCommand,
   set,
   get,

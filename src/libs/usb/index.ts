@@ -1,0 +1,1 @@
+export { createCommunicationWithUsbDevice } from './communication';

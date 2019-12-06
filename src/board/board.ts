@@ -1,39 +1,42 @@
-import usb from './usb';
-import formatters from './formatters';
+import { createCommunicationWithUsbDevice } from 'libs/usb';
+import { integersToString, stringToIntegers } from 'helpers/formatters';
+
 import { createLogger, LOG_TYPE } from 'libs/log';
 import constants from './board.constants';
 
 const logger = createLogger('board');
 
+const electron = window.require('electron');
+const usbModule = electron.remote.require('usb');
+
+const {
+  onDeviceReady,
+  onDeviceExit,
+  sendToUsbDevice,
+  listenFromUsbDevice,
+} = createCommunicationWithUsbDevice({
+  usbModule,
+  vendorId: constants.BETAFLIGHT_USB_IDS.vendor,
+  productId: constants.BETAFLIGHT_USB_IDS.product,
+});
+
 const onConnect = handler => {
-  const tryToConnect = () => {
-    connect()
-      .then(() => handler())
+  onDeviceReady(() => {
+    sendToUsb([constants.MSP_CODES.CLI_MODE])
+      .then(response => {
+        logger(LOG_TYPE.SUCCESS, 'board connected!');
+        if (response === '#') {
+          logger(
+            LOG_TYPE.WARNING,
+            'the board was already is cli mode, reactivating...'
+          );
+          return sendCommand('version');
+        }
+        handler();
+      })
       .catch(error => {
         logger(LOG_TYPE.ERROR, `connection failed! ${error.message}`);
       });
-  };
-
-  tryToConnect();
-  usb.onDevicePlugged(tryToConnect);
-};
-
-const connect = () => {
-  try {
-    usb.connectToDeviceByIds(constants.BETAFLIGHT_USB_IDS);
-  } catch (error) {
-    return Promise.reject(error);
-  }
-
-  return sendToUsb([constants.MSP_CODES.CLI_MODE]).then(response => {
-    logger(LOG_TYPE.SUCCESS, 'board connected!');
-    if (response === '#') {
-      logger(
-        LOG_TYPE.WARNING,
-        'the board was already is cli mode, reactivating...'
-      );
-      return sendCommand('version');
-    }
   });
 };
 
@@ -69,13 +72,13 @@ const receiveData = integers => {
     state.response.push(...integers);
 
     if (isMessageComplete(state.response)) {
-      const text = formatters.integersToString(state.response);
+      const text = integersToString(state.response);
       logger(LOG_TYPE.SUCCESS, `message received ${text}`);
       state.sending = false;
       clearTimeout(state.controlTimeout);
       state.resolve(text);
     } else {
-      usb.listen(receiveData, onListenFailed);
+      listenFromUsbDevice(receiveData, onListenFailed);
     }
   } else {
     logger(LOG_TYPE.WARNING, `ignoring data ${integers}`);
@@ -94,8 +97,8 @@ const sendToUsb = message => {
     state.reject = reject;
   });
 
-  usb.listen(receiveData, onListenFailed);
-  usb.send(message);
+  listenFromUsbDevice(receiveData, onListenFailed);
+  sendToUsbDevice(message);
 
   state.controlTimeout = setTimeout(() => {
     logger(LOG_TYPE.ERROR, 'did not get a valid response in time!');
@@ -115,7 +118,7 @@ const onListenFailed = () => {
 
 const sendCommand = command => {
   logger(LOG_TYPE.INFO, `sending command "${command}"`);
-  return sendToUsb(formatters.stringToIntegers(`${command}\n`));
+  return sendToUsb(stringToIntegers(`${command}\n`));
 };
 
 /*
@@ -137,5 +140,5 @@ const reboot = () => {
 export default {
   onConnect,
   sendCommand,
-  onUnplugged: usb.onUnplugged,
+  onUnplugged: onDeviceExit,
 };
