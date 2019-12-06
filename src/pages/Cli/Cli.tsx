@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { Form, Input, Icon } from 'antd';
 import Header from '../../components/Header';
 import Content from '../../components/Content';
@@ -7,9 +6,16 @@ import Content from '../../components/Content';
 import Logo from '../../assets/cloud.svg';
 import './Cli.css';
 
-class Cli extends Component {
-  constructor() {
-    super();
+interface Props {
+  onSubmit: (string) => void;
+  response: string;
+}
+
+class Cli extends Component<Props> {
+  inputRef: any;
+
+  constructor(props: Props) {
+    super(props);
     this.inputRef = React.createRef();
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -20,7 +26,7 @@ class Cli extends Component {
 
   handleSubmit(event) {
     const { onSubmit } = this.props;
-    const command = this.inputRef.current.input.value;
+    const command: string = this.inputRef.current.input.value;
 
     onSubmit(command);
 
@@ -61,10 +67,5 @@ class Cli extends Component {
     );
   }
 }
-
-Cli.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  response: PropTypes.string.isRequired,
-};
 
 export default Cli;

@@ -3,17 +3,13 @@ import board from '../../board';
 import Cli from './Cli';
 
 class CliContainer extends Component {
-  constructor() {
-    super();
-    this.state = { response: null };
-    this.onSubmit = this.onSubmit.bind(this);
-  }
+  state = { response: null };
 
-  onSubmit(command) {
+  onSubmit = command => {
     board.sendCommand(command).then(response => {
       this.setState({ response });
     });
-  }
+  };
 
   componentDidMount() {
     board.sendCommand('version').then(response => {

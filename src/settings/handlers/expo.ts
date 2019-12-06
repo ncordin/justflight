@@ -29,7 +29,7 @@ const read = () => {
 const save = ({ current: midVelocity }, { rates }) => {
   const superRate = findSuperRateFromVelocity(rates);
   const expo = findExpoFromMidVelocity(superRate, midVelocity);
-  const formattedValue = parseInt(expo * 100);
+  const formattedValue = Math.round(expo * 100);
 
   board.set('roll_expo', formattedValue);
   board.set('pitch_expo', formattedValue);

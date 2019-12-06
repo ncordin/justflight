@@ -37,6 +37,10 @@ const connect = () => {
 const state = {
   sending: false,
   controlTimeout: null,
+  response: [],
+  promise: null,
+  resolve: null,
+  reject: null,
 };
 
 const areMessagesEqual = (messageA, messageB) => {

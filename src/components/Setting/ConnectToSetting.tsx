@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { selectSetting } from '../../store/settings/settings.selectors';
@@ -11,25 +10,22 @@ const connectToSettingByName = name => {
     onSelect: value => dispatch(changeSetting(name, value)),
   });
 
-  return connect(
-    mapStateToProps,
-    mapDispatchToProps
-  );
+  return connect(mapStateToProps, mapDispatchToProps);
 };
 
 const RenderChildren = ({ setting, onSelect, children }) => {
   return children(setting, onSelect);
 };
 
-const ConnectToSetting = ({ name, children }) => {
+interface Props {
+  children: any;
+  name: string;
+}
+
+const ConnectToSetting = ({ name, children }: Props) => {
   const Connection = connectToSettingByName(name)(RenderChildren);
 
   return <Connection>{children}</Connection>;
-};
-
-ConnectToSetting.propTypes = {
-  name: PropTypes.string.isRequired,
-  children: PropTypes.func.isRequired,
 };
 
 export default ConnectToSetting;

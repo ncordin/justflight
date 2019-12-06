@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { selectIsBoardConnected } from '../store/board/board.selectors';
@@ -12,7 +11,11 @@ import Tunning from './Tunning';
 import Setup from './Setup';
 import Cli from './Cli';
 
-class Index extends Component {
+interface Props {
+  currentPage: string;
+}
+
+class Index extends Component<Props> {
   render() {
     const { currentPage } = this.props;
 
@@ -37,10 +40,6 @@ class Index extends Component {
     }
   }
 }
-
-Index.propTypes = {
-  currentPage: PropTypes.string,
-};
 
 const mapStateToProps = state => ({
   isConnected: selectIsBoardConnected(state),

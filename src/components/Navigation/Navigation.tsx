@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Button, Icon, Badge } from 'antd';
 
 import Logo from '../../components/Logo';
@@ -14,7 +13,15 @@ const findIn = (object, test) => {
   return values.filter(test);
 };
 
-class Navigation extends Component {
+interface Props {
+  currentPage: string;
+  setPage: (string) => void;
+  changes: number;
+  isSaving: boolean;
+  onSave: () => void;
+}
+
+class Navigation extends Component<Props> {
   renderTab(page) {
     const { currentPage, setPage } = this.props;
 
@@ -50,13 +57,5 @@ class Navigation extends Component {
     );
   }
 }
-
-Navigation.propTypes = {
-  currentPage: PropTypes.string,
-  setPage: PropTypes.func.isRequired,
-  changes: PropTypes.number.isRequired,
-  isSaving: PropTypes.bool.isRequired,
-  onSave: PropTypes.func.isRequired,
-};
 
 export default Navigation;

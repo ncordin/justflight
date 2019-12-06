@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import board from '../board';
@@ -8,7 +7,13 @@ import { fetchSettings } from '../store/settings/settings.actions';
 import { setCurrentPage } from '../store/navigation/navigation.actions';
 import { PAGE_TYPES } from '../constants/navigation.constants';
 
-class BoardConnection extends Component {
+interface Props {
+  onBoardConnect: () => void;
+  onBoardDisconnect: () => void;
+  children: JSX.Element;
+}
+
+class BoardConnection extends Component<Props> {
   componentDidMount() {
     const { onBoardConnect, onBoardDisconnect } = this.props;
 
@@ -30,12 +35,6 @@ class BoardConnection extends Component {
   }
 }
 
-BoardConnection.propTypes = {
-  onBoardConnect: PropTypes.func.isRequired,
-  onBoardDisconnect: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-};
-
 const mapDispatchToProps = dispatch => ({
   onBoardConnect: () => {
     dispatch(connected());
@@ -48,7 +47,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(BoardConnection);
+export default connect(null, mapDispatchToProps)(BoardConnection);

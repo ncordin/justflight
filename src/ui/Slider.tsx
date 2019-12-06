@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Slider, InputNumber } from 'antd';
 
 import { closest } from '../helpers/numbers';
 import './Slider.css';
 
-class IntegerStep extends Component {
-  constructor() {
-    super();
+interface Props {
+  selected: number;
+  onSelect: (number) => void;
+  min: number;
+  max: number;
+  step?: number;
+  marks?: number[];
+}
+
+interface State {
+  value: number;
+}
+
+class IntegerStep extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
     this.state = {
       value: 0,
     };
@@ -59,14 +71,5 @@ class IntegerStep extends Component {
     );
   }
 }
-
-IntegerStep.propTypes = {
-  selected: PropTypes.number.isRequired,
-  onSelect: PropTypes.func.isRequired,
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
-  step: PropTypes.number,
-  marks: PropTypes.arrayOf(PropTypes.number),
-};
 
 export default IntegerStep;

@@ -11,7 +11,7 @@ export const configureStore = () => {
   const middlewares = [thunk, logger];
   const extensions = compose(
     applyMiddleware(...middlewares),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
+    window['devToolsExtension'] ? window['devToolsExtension']() : f => f
   );
 
   return createStore(reducers, extensions);

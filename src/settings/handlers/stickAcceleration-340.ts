@@ -5,7 +5,8 @@ const CONVERSION_RATIO = 10;
 const read = () => {
   return board
     .get('dterm_setpoint_weight')
-    .then(response => parseInt(Math.round(response / CONVERSION_RATIO)))
+    .then(response => parseInt(response))
+    .then(response => Math.round(response / CONVERSION_RATIO))
     .then(current => ({ current }));
 };
 

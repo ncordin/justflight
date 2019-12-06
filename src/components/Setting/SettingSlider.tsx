@@ -1,11 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import ConnectToSetting from './ConnectToSetting';
 import Slider from '../../ui/Slider';
 import './Setting.css';
 
-const SettingSlider = ({ name, description, min, max, step, marks }) => (
+interface Props {
+  name: string;
+  description: string;
+  min: number;
+  max: number;
+  step: number;
+  marks?: number[];
+}
+
+const SettingSlider = ({ name, description, min, max, step, marks }: Props) => (
   <ConnectToSetting name={name}>
     {(setting, onSelect) => (
       <div className="Setting-row">
@@ -24,14 +32,5 @@ const SettingSlider = ({ name, description, min, max, step, marks }) => (
     )}
   </ConnectToSetting>
 );
-
-SettingSlider.propTypes = {
-  name: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
-  step: PropTypes.number.isRequired,
-  marks: PropTypes.array,
-};
 
 export default SettingSlider;

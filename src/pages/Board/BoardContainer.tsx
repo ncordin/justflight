@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Board from './Board';
 import { fetchBoardDetails } from '../../store/board/board.actions';
 import { selectBoardDetails } from '../../store/board/board.selectors';
 
-class BoardContainer extends Component {
+interface Props {
+  fetchIt: () => void;
+  details: any;
+}
+
+class BoardContainer extends Component<Props> {
   componentDidMount() {
     this.props.fetchIt();
   }
@@ -16,11 +20,6 @@ class BoardContainer extends Component {
   }
 }
 
-BoardContainer.propTypes = {
-  fetchIt: PropTypes.func.isRequired,
-  details: PropTypes.object.isRequired,
-};
-
 const mapStateToProps = state => ({
   details: selectBoardDetails(state),
 });
@@ -29,7 +28,4 @@ const mapDispatchToProps = dispatch => ({
   fetchIt: () => dispatch(fetchBoardDetails()),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BoardContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(BoardContainer);

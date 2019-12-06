@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { Tag } from 'antd';
 
 import Centered from '../../ui/Centered';
@@ -7,7 +6,11 @@ import Content from '../../components/Content';
 
 import './Board.css';
 
-const Board = ({ details }) => {
+interface Props {
+  details: any;
+}
+
+const Board = ({ details }: Props) => {
   const colors = [
     '#f50',
     '#2db7f5',
@@ -47,10 +50,6 @@ const Board = ({ details }) => {
       </Content>
     </Fragment>
   );
-};
-
-Board.propTypes = {
-  details: PropTypes.object.isRequired,
 };
 
 export default Board;

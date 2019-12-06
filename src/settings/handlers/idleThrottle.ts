@@ -5,7 +5,8 @@ const CONVERSION_RATIO = 100;
 const read = () => {
   return board
     .get('dshot_idle_value')
-    .then(response => parseFloat(response / CONVERSION_RATIO))
+    .then(response => parseInt(response, 10))
+    .then(response => response / CONVERSION_RATIO)
     .then(current => ({ current }));
 };
 

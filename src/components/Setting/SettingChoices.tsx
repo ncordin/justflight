@@ -1,11 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import ConnectToSetting from './ConnectToSetting';
 import Choices from '../../ui/Choices';
 import './Setting.css';
 
-const SettingChoices = ({ name, description, values }) => (
+interface Props {
+  name: string;
+  description: string;
+  values?: number[] | string[];
+}
+
+const SettingChoices = ({ name, description, values }: Props) => (
   <ConnectToSetting name={name}>
     {(setting, onSelect) => (
       <div className="Setting-row">
@@ -21,11 +26,5 @@ const SettingChoices = ({ name, description, values }) => (
     )}
   </ConnectToSetting>
 );
-
-SettingChoices.propTypes = {
-  name: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  values: PropTypes.array,
-};
 
 export default SettingChoices;
