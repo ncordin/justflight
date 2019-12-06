@@ -1,6 +1,6 @@
 import usb from './usb';
 import formatters from './formatters';
-import { createLogger } from './logger';
+import { createLogger, LOG_TYPE } from 'libs/log';
 import constants from './board.constants';
 
 const logger = createLogger('board');
@@ -10,7 +10,7 @@ const onConnect = handler => {
     connect()
       .then(() => handler())
       .catch(error => {
-        logger('error', `connection failed! ${error.message}`);
+        logger(LOG_TYPE.ERROR, `connection failed! ${error.message}`);
       });
   };
 
@@ -26,9 +26,12 @@ const connect = () => {
   }
 
   return sendToUsb([constants.MSP_CODES.CLI_MODE]).then(response => {
-    logger('success', 'board connected!');
+    logger(LOG_TYPE.SUCCESS, 'board connected!');
     if (response === '#') {
-      logger('warning', 'the board was already is cli mode, reactivating...');
+      logger(
+        LOG_TYPE.WARNING,
+        'the board was already is cli mode, reactivating...'
+      );
       return sendCommand('version');
     }
   });
@@ -67,7 +70,7 @@ const receiveData = integers => {
 
     if (isMessageComplete(state.response)) {
       const text = formatters.integersToString(state.response);
-      logger('success', `message received ${text}`);
+      logger(LOG_TYPE.SUCCESS, `message received ${text}`);
       state.sending = false;
       clearTimeout(state.controlTimeout);
       state.resolve(text);
@@ -75,13 +78,13 @@ const receiveData = integers => {
       usb.listen(receiveData, onListenFailed);
     }
   } else {
-    logger('warning', `ignoring data ${integers}`);
+    logger(LOG_TYPE.WARNING, `ignoring data ${integers}`);
   }
 };
 
 const sendToUsb = message => {
   if (state.sending) {
-    logger('error', 'send message failed! Board is already sending...');
+    logger(LOG_TYPE.ERROR, 'send message failed! Board is already sending...');
     throw new Error('Send message failed! Board is already sending...');
   }
   state.sending = true;
@@ -95,7 +98,7 @@ const sendToUsb = message => {
   usb.send(message);
 
   state.controlTimeout = setTimeout(() => {
-    logger('error', 'did not get a valid response in time!');
+    logger(LOG_TYPE.ERROR, 'did not get a valid response in time!');
     // reboot();
   }, 1000);
 
@@ -103,7 +106,7 @@ const sendToUsb = message => {
 };
 
 const onListenFailed = () => {
-  logger('error', 'messsage receiption failed...');
+  logger(LOG_TYPE.ERROR, 'messsage receiption failed...');
   clearTimeout(state.controlTimeout);
   state.sending = false;
   state.response = [];
@@ -111,7 +114,7 @@ const onListenFailed = () => {
 };
 
 const sendCommand = command => {
-  logger('info', `sending command "${command}"`);
+  logger(LOG_TYPE.INFO, `sending command "${command}"`);
   return sendToUsb(formatters.stringToIntegers(`${command}\n`));
 };
 
