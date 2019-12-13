@@ -1,4 +1,5 @@
-import board from '../../board';
+import { getGlobalBoardConnectionInstance } from 'libs/board';
+
 import { findSuperRateFromVelocity } from '../../helpers/rates';
 import { buildSuperRateList } from '../../helpers/rates';
 import {
@@ -7,8 +8,10 @@ import {
 } from '../../constants/settings.constants';
 
 const read = () => {
+  const board = getGlobalBoardConnectionInstance();
+
   return board.get('roll_srate').then(response => {
-    const superRate = (response / 100).toFixed(2);
+    const superRate = (parseInt(response) / 100).toFixed(2);
     const superRates = buildSuperRateList();
     const current = superRates[superRate] || DEFAULT_VELOCITY;
 
@@ -17,6 +20,8 @@ const read = () => {
 };
 
 const save = ({ current: velocity }) => {
+  const board = getGlobalBoardConnectionInstance();
+
   board.set('roll_rc_rate', FIXED_RC_RATE * 100);
   board.set('pitch_rc_rate', FIXED_RC_RATE * 100);
   board.set('yaw_rc_rate', FIXED_RC_RATE * 100);

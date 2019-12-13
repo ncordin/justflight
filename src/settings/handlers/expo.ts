@@ -1,4 +1,5 @@
-import board from '../../board';
+import { getGlobalBoardConnectionInstance } from 'libs/board';
+
 import { getVelocity } from '../../helpers/rates';
 import { findSuperRateFromVelocity } from '../../helpers/rates';
 import { findExpoFromMidVelocity } from '../../helpers/rates';
@@ -8,6 +9,7 @@ import {
 } from '../../constants/settings.constants';
 
 const read = () => {
+  const board = getGlobalBoardConnectionInstance();
   const superRatePromise = board.get('roll_srate');
   const expoPromise = board.get('roll_expo');
   const rcRatePromise = board.get('roll_rc_rate');
@@ -18,8 +20,8 @@ const read = () => {
         return DEFAULT_MID_VELOCITY;
       }
 
-      const superRate = (response[0] / 100).toFixed(2);
-      const expo = (response[1] / 100).toFixed(2);
+      const superRate = (parseInt(response[0]) / 100).toFixed(2);
+      const expo = (parseInt(response[1]) / 100).toFixed(2);
 
       return getVelocity(0.5, superRate, expo);
     })
@@ -27,6 +29,7 @@ const read = () => {
 };
 
 const save = ({ current: midVelocity }, { rates }) => {
+  const board = getGlobalBoardConnectionInstance();
   const superRate = findSuperRateFromVelocity(rates);
   const expo = findExpoFromMidVelocity(superRate, midVelocity);
   const formattedValue = Math.round(expo * 100);

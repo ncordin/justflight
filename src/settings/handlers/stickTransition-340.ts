@@ -1,5 +1,5 @@
 import { findKey } from 'lodash';
-import board from '../../board';
+import { getGlobalBoardConnectionInstance } from 'libs/board';
 
 const DISPLAY_VALUES = {
   100: 'smooth',
@@ -8,6 +8,8 @@ const DISPLAY_VALUES = {
 };
 
 const read = () => {
+  const board = getGlobalBoardConnectionInstance();
+
   return board
     .get('setpoint_relax_ratio')
     .then(response => DISPLAY_VALUES[response])
@@ -15,6 +17,7 @@ const read = () => {
 };
 
 const save = ({ current }) => {
+  const board = getGlobalBoardConnectionInstance();
   const value = findKey(DISPLAY_VALUES, value => value === current);
 
   board.set('setpoint_relax_ratio', value);

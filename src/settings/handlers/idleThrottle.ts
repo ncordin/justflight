@@ -1,8 +1,10 @@
-import board from '../../board';
+import { getGlobalBoardConnectionInstance } from 'libs/board';
 
 const CONVERSION_RATIO = 100;
 
 const read = () => {
+  const board = getGlobalBoardConnectionInstance();
+
   return board
     .get('dshot_idle_value')
     .then(response => parseInt(response, 10))
@@ -11,6 +13,8 @@ const read = () => {
 };
 
 const save = ({ current }) => {
+  const board = getGlobalBoardConnectionInstance();
+
   board.set('dshot_idle_value', current * CONVERSION_RATIO);
 };
 

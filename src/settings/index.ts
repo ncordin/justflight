@@ -1,4 +1,4 @@
-import board from '../board';
+import { getGlobalBoardConnectionInstance } from 'libs/board';
 import adaptersByVersion from './adapters';
 import { readWithAdapter, saveWithAdapter } from './helpers';
 
@@ -10,6 +10,8 @@ export const readSettings = () => {
 };
 
 export const saveSettings = (settings, boardDetails) => {
+  const board = getGlobalBoardConnectionInstance();
+
   saveWithAdapter(adapter, settings);
   adapter.onSave(settings, boardDetails);
 

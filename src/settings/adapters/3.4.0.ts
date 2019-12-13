@@ -1,4 +1,4 @@
-import board from '../../board';
+import { getGlobalBoardConnectionInstance } from 'libs/board';
 
 // Tunning
 import rates from '../handlers/rates';
@@ -30,6 +30,8 @@ const settingHandlers = [
 ];
 
 const onSave = (settings, boardDetails) => {
+  const board = getGlobalBoardConnectionInstance();
+
   // Features
   board.sendCommand('feature -TELEMETRY');
   board.sendCommand('feature -RX_PARALLEL_PWM');
@@ -41,19 +43,19 @@ const onSave = (settings, boardDetails) => {
 
   // Core speed
   board.set('motor_pwm_protocol', 'DSHOT600');
-  board.set('gyro_sync_denom', 1);
-  board.set('pid_process_denom', boardDetails.family === 'F4' ? 1 : 2);
+  board.set('gyro_sync_denom', '1');
+  board.set('pid_process_denom', boardDetails.family === 'F4' ? '1' : '2');
 
   // Hype tunnings
   board.set('rc_interp_ch', 'RPYT');
   board.set('rc_smoothing_type', 'FILTER');
   board.set('iterm_relax', 'RP');
-  board.set('throttle_boost', 10);
+  board.set('throttle_boost', '10');
 
   // OSD
-  board.set('osd_tim_2_pos', 2433);
-  board.set('osd_warnings_pos', 2313);
-  board.set('osd_avg_cell_voltage_pos', 2455);
+  board.set('osd_tim_2_pos', '2433');
+  board.set('osd_warnings_pos', '2313');
+  board.set('osd_avg_cell_voltage_pos', '2455');
   board.set('osd_stat_max_spd', 'OFF');
   board.set('osd_stat_min_rssi', 'OFF');
   board.set('osd_stat_max_curr', 'OFF');

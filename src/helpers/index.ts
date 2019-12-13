@@ -1,4 +1,4 @@
-import board from '../board';
+import { getGlobalBoardConnectionInstance } from 'libs/board';
 
 const boardDetailsParser = rawDetails => {
   const {
@@ -41,6 +41,8 @@ const boardDetailsParser = rawDetails => {
 };
 
 export const boardDetailsFetcher = () => {
+  const board = getGlobalBoardConnectionInstance();
+
   return Promise.all([
     board.sendCommand('version'),
     board.sendCommand('status'),

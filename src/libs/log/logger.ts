@@ -1,9 +1,5 @@
-export enum LOG_TYPE {
-  SUCCESS,
-  INFO,
-  WARNING,
-  ERROR,
-}
+import { Logger } from './index';
+import { LOG_TYPE } from './types';
 
 const typesDetails = {
   [LOG_TYPE.SUCCESS]: { color: 'green', prefix: '✔' },
@@ -19,7 +15,7 @@ const printLog = (name: string, type: LOG_TYPE, message: string): void => {
   console.log('%c%s', `color: ${detail.color};`, formattedMessage);
 };
 
-export const createLogger = (name: string) => (
+export const createLogger = (name: string): Logger => (
   type: LOG_TYPE,
   message: string
 ) => {

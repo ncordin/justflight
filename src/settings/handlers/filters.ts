@@ -10,7 +10,8 @@
  */
 
 import { findKey } from 'lodash';
-import board from '../../board';
+
+import { getGlobalBoardConnectionInstance } from 'libs/board';
 
 const filters = {
   clean: [150, 400, 100, 250],
@@ -19,6 +20,8 @@ const filters = {
 };
 
 const read = () => {
+  const board = getGlobalBoardConnectionInstance();
+
   return board
     .get('gyro_lowpass_hz')
     .then(response =>
@@ -28,6 +31,7 @@ const read = () => {
 };
 
 const save = ({ current }) => {
+  const board = getGlobalBoardConnectionInstance();
   const values = filters[current];
 
   board.set('gyro_lowpass_hz', values[0]);

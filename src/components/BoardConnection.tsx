@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
-import board from '../board';
+import { makeGlobalBoardConnectionAndSetInstance } from 'libs/board';
 import { connected, disconnected } from '../store/board/board.actions';
 import { fetchSettings } from '../store/settings/settings.actions';
 import { setCurrentPage } from '../store/navigation/navigation.actions';
@@ -13,9 +13,13 @@ interface Props {
   children: JSX.Element;
 }
 
+const electron = window.require('electron');
+const usbModule = electron.remote.require('usb');
+
 class BoardConnection extends Component<Props> {
   componentDidMount() {
     const { onBoardConnect, onBoardDisconnect } = this.props;
+    const board = makeGlobalBoardConnectionAndSetInstance({ usbModule });
 
     onBoardDisconnect();
 

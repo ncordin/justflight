@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
-import board from '../../board';
+import { getGlobalBoardConnectionInstance } from 'libs/board';
 import Cli from './Cli';
 
 class CliContainer extends Component {
   state = { response: null };
 
   onSubmit = command => {
-    board.sendCommand(command).then(response => {
-      this.setState({ response });
-    });
+    getGlobalBoardConnectionInstance()
+      .sendCommand(command)
+      .then(response => {
+        this.setState({ response });
+      });
   };
 
   componentDidMount() {
-    board.sendCommand('version').then(response => {
-      this.setState({ response });
-    });
+    getGlobalBoardConnectionInstance()
+      .sendCommand('version')
+      .then(response => {
+        this.setState({ response });
+      });
   }
 
   formatResponse() {
