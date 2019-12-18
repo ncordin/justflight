@@ -6,7 +6,7 @@ const ButtonGroup = Button.Group;
 interface Props {
   values: string[];
   selected: string;
-  onSelect: (string) => void;
+  onSelect: (value: string) => void;
 }
 
 const Choices = ({ values, selected, onSelect }: Props) => {

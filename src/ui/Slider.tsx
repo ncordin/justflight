@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Slider, InputNumber } from 'antd';
+import { SliderValue } from 'antd/lib/slider';
 
 import { closest } from '../helpers/numbers';
 import './Slider.css';
 
 interface Props {
   selected: number;
-  onSelect: (number) => void;
+  onSelect: (value: number) => void;
   min: number;
   max: number;
   step?: number;
@@ -31,13 +32,15 @@ class IntegerStep extends Component<Props, State> {
     this.setState({ value: selected });
   }
 
-  onChange = value => {
+  onChange = (value: number | undefined) => {
     const { onSelect } = this.props;
 
-    onSelect(value);
-    this.setState({
-      value,
-    });
+    if (value) {
+      onSelect(value);
+      this.setState({
+        value,
+      });
+    }
   };
 
   render() {
@@ -51,8 +54,8 @@ class IntegerStep extends Component<Props, State> {
             min={min}
             max={max}
             step={step}
-            onChange={this.onChange}
-            value={value}
+            onChange={sliderValue => this.onChange(sliderValue as number)}
+            value={value as SliderValue}
           />
         </div>
         <div className="Slider-input">
