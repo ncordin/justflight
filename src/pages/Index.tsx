@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { selectIsBoardConnected } from '../store/board/board.selectors';
 import { selectCurrentPage } from '../store/navigation/navigation.selectors';
 
-import { PAGE_TYPES } from '../constants/navigation.constants';
+import { PageTypes } from '../constants/navigation.constants';
 import Welcome from './Welcome';
 import Board from './Board';
 import Tunning from './Tunning';
@@ -12,7 +12,7 @@ import Setup from './Setup';
 import Cli from './Cli';
 
 interface Props {
-  currentPage: string;
+  currentPage: PageTypes;
 }
 
 class Index extends Component<Props> {
@@ -20,23 +20,20 @@ class Index extends Component<Props> {
     const { currentPage } = this.props;
 
     switch (currentPage) {
-      case PAGE_TYPES.WELCOME:
+      case PageTypes.Welcome:
         return <Welcome />;
 
-      case PAGE_TYPES.BOARD:
+      case PageTypes.Board:
         return <Board />;
 
-      case PAGE_TYPES.TUNNING:
+      case PageTypes.Tunning:
         return <Tunning />;
 
-      case PAGE_TYPES.SETUP:
+      case PageTypes.Setup:
         return <Setup />;
 
-      case PAGE_TYPES.CLI:
+      case PageTypes.Cli:
         return <Cli />;
-
-      default:
-        return <Welcome />;
     }
   }
 }

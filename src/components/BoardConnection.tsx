@@ -5,7 +5,7 @@ import { makeGlobalBoardConnectionAndSetInstance } from 'libs/board';
 import { connected, disconnected } from '../store/board/board.actions';
 import { fetchSettings } from '../store/settings/settings.actions';
 import { setCurrentPage } from '../store/navigation/navigation.actions';
-import { PAGE_TYPES } from '../constants/navigation.constants';
+import { PageTypes } from '../constants/navigation.constants';
 
 interface Props {
   onBoardConnect: () => void;
@@ -43,11 +43,11 @@ const mapDispatchToProps = dispatch => ({
   onBoardConnect: () => {
     dispatch(connected());
     dispatch(fetchSettings());
-    dispatch(setCurrentPage(PAGE_TYPES.BOARD));
+    dispatch(setCurrentPage(PageTypes.Board));
   },
   onBoardDisconnect: () => {
     dispatch(disconnected());
-    dispatch(setCurrentPage(PAGE_TYPES.WELCOME));
+    dispatch(setCurrentPage(PageTypes.Welcome));
   },
 });
 

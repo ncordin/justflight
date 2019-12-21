@@ -1,6 +1,29 @@
 import { getGlobalBoardConnectionInstance } from 'libs/board';
 
-const boardDetailsParser = rawDetails => {
+interface RawDetails {
+  version: string;
+  status: string;
+  protocol: string;
+  gyroDenom: string;
+  pidDenom: string;
+}
+
+type ChipFamilly = 'F3' | 'F4' | 'F7' | 'F?';
+
+export interface BoardDetails {
+  firmware: string;
+  version: string;
+  brand: string;
+  tag: string;
+  family: ChipFamilly;
+  clock: string;
+  gyro: string;
+  protocol: string;
+  loops: string;
+  load: number;
+}
+
+const boardDetailsParser = (rawDetails: RawDetails): BoardDetails => {
   const {
     version: versionRaw,
     status,
@@ -17,14 +40,16 @@ const boardDetailsParser = rawDetails => {
   const [, load] = status.match(/CPU:(\w+)/) || [];
   const [, gyro] = status.match(/GYRO=(\w+)/) || [];
 
-  const loops = `${8 / gyroDenom}K / ${8 / gyroDenom / pidDenom}K`;
+  const loops = `${8 / parseInt(gyroDenom)}K / ${8 /
+    parseInt(gyroDenom) /
+    parseInt(pidDenom)}K`;
 
-  const family =
-    {
+  const family: ChipFamilly =
+    ({
       '72MHz': 'F3',
       '168MHz': 'F4',
       '216MHz': 'F7',
-    }[clock] || 'F?';
+    } as any)[clock] || 'F?';
 
   return {
     firmware: firmware.toUpperCase(),
@@ -36,7 +61,7 @@ const boardDetailsParser = rawDetails => {
     gyro,
     protocol,
     loops,
-    load: `${load}%`,
+    load: parseInt(load),
   };
 };
 
@@ -50,7 +75,7 @@ export const boardDetailsFetcher = () => {
     board.get('gyro_sync_denom'),
     board.get('pid_process_denom'),
   ]).then(([version, status, protocol, gyroDenom, pidDenom]) => {
-    const rawDetails = {
+    const rawDetails: RawDetails = {
       version,
       status,
       protocol,

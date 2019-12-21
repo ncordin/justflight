@@ -1,3 +1,5 @@
-export const selectIsBoardConnected = state => state.board.connected;
+import { State } from 'store/types';
 
-export const selectBoardDetails = state => state.board.details;
+export const selectIsBoardConnected = (state: State) => state.board.connected;
+
+export const selectBoardDetails = (state: State) => state.board.details;

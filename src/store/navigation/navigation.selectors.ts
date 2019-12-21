@@ -1,1 +1,3 @@
-export const selectCurrentPage = state => state.navigation.page;
+import { State } from 'store/types';
+
+export const selectCurrentPage = (state: State) => state.navigation.page;

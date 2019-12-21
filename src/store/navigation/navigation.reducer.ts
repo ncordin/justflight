@@ -1,13 +1,18 @@
-import { ACTION_TYPES } from './navigation.actions';
+import { ActionTypes, NavigationActions } from './navigation.actions';
+import { PageTypes } from 'constants/navigation.constants';
 
-const initialState = {
-  page: null
+export interface NavigationState {
+  page: PageTypes;
+}
+
+const initialState: NavigationState = {
+  page: PageTypes.Welcome,
 };
 
-const reducer = (state = initialState, { type, payload }) => {
-  switch (type) {
-    case ACTION_TYPES.SET_CURRENT_PAGE:
-      return { page: payload };
+const reducer = (state = initialState, action: NavigationActions) => {
+  switch (action.type) {
+    case ActionTypes.SetCurentPage:
+      return { page: action.payload };
 
     default:
       return state;

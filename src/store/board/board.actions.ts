@@ -1,17 +1,35 @@
-import { boardDetailsFetcher } from '../../helpers';
+import { boardDetailsFetcher, BoardDetails } from '../../helpers';
 
-export const ACTION_TYPES = {
-  BOARD_CONNECTED: 'BOARD_CONNECTED',
-  BOARD_DISCONNECTED: 'BOARD_DISCONNECTED',
-  SET_BOARD_DETAILS: 'SET_BOARD_DETAILS',
-};
+export enum ActionTypes {
+  BoardConnected = 'BOARD_CONNECTED',
+  BoardDisconnected = 'BOARD_DISCONNECTED',
+  SetBoardDetails = 'SET_BOARD_DETAILS',
+}
 
-export const connected = () => ({
-  type: ACTION_TYPES.BOARD_CONNECTED,
+interface ConnectedAction {
+  type: typeof ActionTypes.BoardConnected;
+}
+
+interface DisconnectedAction {
+  type: typeof ActionTypes.BoardDisconnected;
+}
+
+interface SetBoardDetailsAction {
+  type: typeof ActionTypes.SetBoardDetails;
+  paylaod: BoardDetails;
+}
+
+export type BoardActions =
+  | ConnectedAction
+  | DisconnectedAction
+  | SetBoardDetailsAction;
+
+export const connected = (): ConnectedAction => ({
+  type: ActionTypes.BoardConnected,
 });
 
-export const disconnected = () => ({
-  type: ACTION_TYPES.BOARD_DISCONNECTED,
+export const disconnected = (): DisconnectedAction => ({
+  type: ActionTypes.BoardDisconnected,
 });
 
 export const fetchBoardDetails = () => dispatch => {
@@ -20,7 +38,7 @@ export const fetchBoardDetails = () => dispatch => {
   });
 };
 
-const setBoardDetails = details => ({
-  type: ACTION_TYPES.SET_BOARD_DETAILS,
+const setBoardDetails = (details: BoardDetails) => ({
+  type: ActionTypes.SetBoardDetails,
   payload: details,
 });

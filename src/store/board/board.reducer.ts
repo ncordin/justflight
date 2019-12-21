@@ -1,28 +1,34 @@
-import { ACTION_TYPES } from './board.actions';
+import { ActionTypes, BoardActions } from './board.actions';
+import { BoardDetails } from 'helpers/index';
 
-const initialState = {
+export interface BoardState {
+  connected: boolean;
+  details: BoardDetails | null;
+}
+
+const initialState: BoardState = {
   connected: false,
-  details: {}
+  details: null,
 };
 
-const reducer = (state = initialState, { type, payload }) => {
-  switch (type) {
-    case ACTION_TYPES.BOARD_CONNECTED:
+const reducer = (state = initialState, action: BoardActions): BoardState => {
+  switch (action.type) {
+    case ActionTypes.BoardConnected:
       return {
         ...state,
-        connected: true
+        connected: true,
       };
 
-    case ACTION_TYPES.BOARD_DISCONNECTED:
+    case ActionTypes.BoardDisconnected:
       return {
         ...state,
-        connected: false
+        connected: false,
       };
 
-    case ACTION_TYPES.SET_BOARD_DETAILS:
+    case ActionTypes.SetBoardDetails:
       return {
         ...state,
-        details: payload
+        details: action.paylaod,
       };
 
     default:

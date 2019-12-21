@@ -1,17 +1,24 @@
 import { selectIsBoardConnected } from '../board/board.selectors';
-import { PAGE_DETAILS, PAGE_TYPES } from '../../constants/navigation.constants';
+import { PageTypes, getPageDetail } from '../../constants/navigation.constants';
 
-export const ACTION_TYPES = {
-  SET_CURRENT_PAGE: 'SET_CURRENT_PAGE',
-};
+export enum ActionTypes {
+  SetCurentPage = 'SET_CURRENT_PAGE',
+}
 
-export const setCurrentPage = page => (dispatch, getState) => {
+interface SetCurrentPageAction {
+  type: typeof ActionTypes.SetCurentPage;
+  payload: PageTypes;
+}
+
+export type NavigationActions = SetCurrentPageAction;
+
+export const setCurrentPage = (page: PageTypes) => (dispatch, getState) => {
   const isBoardConnected = selectIsBoardConnected(getState());
-  const pageDetails = PAGE_DETAILS[page] || PAGE_DETAILS[PAGE_TYPES.WELCOME];
+  const pageDetails = getPageDetail(page);
 
   if (pageDetails.requireBoard === false || isBoardConnected) {
     dispatch({
-      type: ACTION_TYPES.SET_CURRENT_PAGE,
+      type: ActionTypes.SetCurentPage,
       payload: page,
     });
   }

@@ -1,40 +1,63 @@
-export const PAGE_TYPES = {
-  WELCOME: 'welcome',
-  BOARD: 'board',
-  TUNNING: 'tunning',
-  SETUP: 'setup',
-  CLI: 'cli'
-};
+export enum PageTypes {
+  Welcome = 'welcome',
+  Board = 'board',
+  Tunning = 'tunning',
+  Setup = 'setup',
+  Cli = 'cli',
+}
 
-export const PAGE_DETAILS = {
-  [PAGE_TYPES.WELCOME]: {
-    name: PAGE_TYPES.WELCOME,
+export interface PageDetail {
+  type: PageTypes;
+  label: string;
+  icon: string;
+  navigation: boolean;
+  requireBoard: boolean;
+}
+
+export const PAGE_DETAILS: PageDetail[] = [
+  {
+    type: PageTypes.Welcome,
+    label: 'Welcome',
     icon: 'home',
     navigation: false,
-    requireBoard: false
+    requireBoard: false,
   },
-  [PAGE_TYPES.BOARD]: {
-    name: PAGE_TYPES.BOARD,
+  {
+    type: PageTypes.Board,
+    label: 'Board',
     icon: 'qrcode',
     navigation: true,
-    requireBoard: true
+    requireBoard: true,
   },
-  [PAGE_TYPES.TUNNING]: {
-    name: PAGE_TYPES.TUNNING,
+  {
+    type: PageTypes.Tunning,
+    label: 'Tunning',
     icon: 'rocket',
     navigation: true,
-    requireBoard: true
+    requireBoard: true,
   },
-  [PAGE_TYPES.SETUP]: {
-    name: PAGE_TYPES.SETUP,
+  {
+    type: PageTypes.Setup,
+    label: 'Setup',
     icon: 'setting',
     navigation: true,
-    requireBoard: true
+    requireBoard: true,
   },
-  [PAGE_TYPES.CLI]: {
-    name: PAGE_TYPES.CLI,
+  {
+    type: PageTypes.Cli,
+    label: 'CLI',
     icon: 'code',
     navigation: true,
-    requireBoard: true
+    requireBoard: true,
+  },
+];
+
+export const getPageDetail = (type: PageTypes): PageDetail => {
+  const detail = PAGE_DETAILS.find(detail => detail.type === type);
+
+  if (!detail) {
+    throw new Error(`Can't find PageDetail ${type}`);
   }
+
+  return detail;
 };
