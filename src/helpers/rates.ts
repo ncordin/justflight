@@ -57,10 +57,10 @@ export const findSuperRateFromVelocity = velocity => {
   return findKey(superRates, value => validVelocity === value);
 };
 
-export const findExpoFromMidVelocity = (superRate, midVelocity) => {
+export const findExpoFromMidVelocity = (superRate, midVelocity): string => {
   const expos = buildExpoList(superRate);
   const velocities = Object.values(expos);
   const validVelocity = closest(velocities, midVelocity);
 
-  return findKey(expos, value => validVelocity === value);
+  return findKey(expos, value => validVelocity === value) || '0'; // Default ?
 };

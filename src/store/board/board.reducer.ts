@@ -28,7 +28,7 @@ const reducer = (state = initialState, action: BoardActions): BoardState => {
     case ActionTypes.SetBoardDetails:
       return {
         ...state,
-        details: action.paylaod,
+        details: action.payload,
       };
 
     default:

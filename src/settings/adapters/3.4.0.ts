@@ -14,8 +14,10 @@ import receiverProtocol from '../handlers/receiverProtocol';
 import minVoltage from '../handlers/minVoltage';
 import armChannel from '../handlers/armChannel';
 import propsDirection from '../handlers/propsDirection';
+import { Handler } from 'types';
+import { Handlers } from './types';
 
-const settingHandlers = [
+const settingHandlers: Handler<Handlers, any>[] = [
   rates,
   expo,
   stickAcceleration,

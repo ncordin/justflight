@@ -1,21 +1,22 @@
 import { getGlobalBoardConnectionInstance } from 'libs/board';
+import { Handlers, ReceiverProtocol, ReceiverProtocolHandler } from 'settings/adapters/types';
 
-const read = () => {
+const read = (): Promise<ReceiverProtocol> => {
   const board = getGlobalBoardConnectionInstance();
 
-  return board.get('serialrx_provider').then(current => ({
-    current,
-  }));
+  return board.get('serialrx_provider');
 };
 
-const save = ({ current }) => {
+const save = (value: ReceiverProtocol) => {
   const board = getGlobalBoardConnectionInstance();
 
-  board.set('serialrx_provider', current);
+  board.set('serialrx_provider', value);
 };
 
-export default {
-  name: 'receiverProtocol',
+const handler: ReceiverProtocolHandler = {
+  type: Handlers.ReceiverProtocol,
   read,
   save,
 };
+
+export default handler;

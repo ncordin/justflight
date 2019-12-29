@@ -1,7 +1,14 @@
 import { ACTION_TYPES } from './settings.actions';
+import { BoardSettings } from 'types';
 
-const initialState = {
-  data: {},
+export interface SettingsState {
+  data: BoardSettings | null;
+  changes: { [key: string]: boolean };
+  saving: boolean;
+}
+
+const initialState: SettingsState = {
+  data: null,
   changes: {},
   saving: false,
 };

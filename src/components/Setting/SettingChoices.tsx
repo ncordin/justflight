@@ -18,7 +18,7 @@ const SettingChoices = ({ name, description, values }: Props) => (
         <div className="Setting-value">
           <Choices
             values={values || setting.choices}
-            selected={setting.current}
+            selected={setting}
             onSelect={onSelect}
           />
         </div>

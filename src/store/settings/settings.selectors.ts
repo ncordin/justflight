@@ -1,8 +1,11 @@
-export const selectSettings = state => state.settings.data;
+import { State } from 'store/types';
 
-export const selectSetting = (state, name) => state.settings.data[name];
+export const selectSettings = (state: State) => state.settings.data;
 
-export const selectChanges = state =>
+export const selectSetting = (state: State, name: string) =>
+  state.settings.data[name];
+
+export const selectChanges = (state: State) =>
   Object.keys(state.settings.changes).length;
 
-export const selectIsSaving = state => state.settings.saving;
+export const selectIsSaving = (state: State) => state.settings.saving;

@@ -16,7 +16,7 @@ class BoardContainer extends Component<Props> {
   }
 
   render() {
-    return <Board details={this.props.details} />;
+    return this.props.details ? <Board details={this.props.details} /> : null;
   }
 }
 

@@ -15,7 +15,7 @@ interface Props {
 
 const SettingSlider = ({ name, description, min, max, step, marks }: Props) => (
   <ConnectToSetting name={name}>
-    {(setting, onSelect) => (
+    {(value, onSelect) => (
       <div className="Setting-row">
         <div className="Setting-description">{description}</div>
         <div className="Setting-value">
@@ -24,7 +24,7 @@ const SettingSlider = ({ name, description, min, max, step, marks }: Props) => (
             max={max}
             step={step}
             marks={marks}
-            selected={setting.current}
+            selected={value}
             onSelect={onSelect}
           />
         </div>

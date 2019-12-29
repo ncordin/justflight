@@ -1,26 +1,28 @@
 import { getGlobalBoardConnectionInstance } from 'libs/board';
+import { Handlers, MinVoltagle, MinVoltagleHandler } from 'settings/adapters/types';
 
-const read = () => {
+const read = (): Promise<MinVoltagle> => {
   const board = getGlobalBoardConnectionInstance();
 
   return board.get('vbat_warning_cell_voltage').then(response => {
     const value = (parseInt(response) / 10).toFixed(1);
-    const current = parseFloat(value);
 
-    return { current };
+    return parseFloat(value);
   });
 };
 
-const save = ({ current }) => {
+const save = (value: MinVoltagle) => {
   const board = getGlobalBoardConnectionInstance();
-  const voltage = current * 10;
+  const voltage = value * 10;
 
   board.set('vbat_warning_cell_voltage', voltage);
   board.set('vbat_min_cell_voltage', voltage - 2);
 };
 
-export default {
-  name: 'minVoltage',
+const handler: MinVoltagleHandler = {
+  type: Handlers.MinVoltage,
   read,
   save,
 };
+
+export default handler;

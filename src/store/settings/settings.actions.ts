@@ -1,5 +1,4 @@
 import { readSettings, saveSettings as save } from '../../settings';
-import { selectBoardDetails } from '../board/board.selectors';
 import { selectSettings } from '../settings/settings.selectors';
 
 export const ACTION_TYPES = {
@@ -28,7 +27,7 @@ export const saveSettings = () => (dispatch, getState) => {
   const state = getState();
 
   dispatch(saveSettingsStart());
-  save(selectSettings(state), selectBoardDetails(state));
+  save(selectSettings(state), selectSettings(state));
 };
 
 const saveSettingsStart = () => ({

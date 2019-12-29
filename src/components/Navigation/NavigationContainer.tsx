@@ -10,9 +10,10 @@ import {
 } from '../../store/settings/settings.selectors';
 
 import Navigation from './Navigation';
+import { PageTypes } from 'constants/navigation.constants';
 
 interface Props {
-  currentPage: string;
+  currentPage: PageTypes;
   setPage: (string) => void;
   changes: number;
   isSaving: boolean;

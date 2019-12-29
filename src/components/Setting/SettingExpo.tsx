@@ -27,7 +27,7 @@ const SettingExpo = ({ velocity }: Props) => {
 };
 
 const mapStateToProps = state => ({
-  velocity: selectSetting(state, 'rates').current,
+  velocity: selectSetting(state, 'rates'),
 });
 
 export default connect(mapStateToProps)(SettingExpo);

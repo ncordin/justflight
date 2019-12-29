@@ -16,7 +16,7 @@ interface DisconnectedAction {
 
 interface SetBoardDetailsAction {
   type: typeof ActionTypes.SetBoardDetails;
-  paylaod: BoardDetails;
+  payload: BoardDetails;
 }
 
 export type BoardActions =
